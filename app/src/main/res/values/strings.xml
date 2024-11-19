@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">NutriMatev1</string>
+
+    <string name="email">Correo electrónico</string>
+    <string name="passwd">Contraseña</string>
+
+    <string name="signUp">Registrarse</string>
+    <string name="login">Acceder</string>
+
 </resources>
