@@ -7,14 +7,22 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class AuthActivity : AppCompatActivity() {
+    //Variables inicializadas para asignarlas luego
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_auth)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+
+        //Asignacion de variables del xml con lo del xml
+
+        //Funciones para ejecutar en el main
+        setup()
     }
+
+    fun setup(){
+
+    }
+
 }
