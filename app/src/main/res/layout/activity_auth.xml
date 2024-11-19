@@ -5,6 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/log"
     tools:context=".AuthActivity">
 
     <EditText
@@ -12,7 +13,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="250dp"
+        android:layout_marginTop="60dp"
         android:layout_marginEnd="16dp"
         android:ems="10"
         android:hint="@string/email"
@@ -22,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editTextTextPassword"
+        android:id="@+id/editTextPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -40,22 +41,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="145dp"
-        android:layout_marginTop="60dp"
         android:layout_marginEnd="145dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/secondaryVariant"
         android:text="@string/signUp"
+        app:layout_constraintBottom_toTopOf="@+id/AUbtnLogin"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPassword" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/AUbtnLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="45dp"
-        android:layout_marginTop="43dp"
         android:layout_marginEnd="45dp"
+        android:layout_marginBottom="40dp"
+        android:backgroundTint="@color/secondaryVariant"
         android:text="@string/login"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AUbtnRegister" />
+        app:layout_constraintStart_toStartOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
