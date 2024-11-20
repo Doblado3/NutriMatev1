@@ -6,6 +6,7 @@
 
     <string name="signUp">Registrarse</string>
     <string name="login">Acceder</string>
+
     <string name="signOut">Cerrar Sesión</string>
     <string name="actualizaBoton">Actualizar</string>
     <string name="textoNombre">Nombre</string>
@@ -17,5 +18,8 @@
     <string name="textoMujer">Mujer</string>
     <string name="textoNSexo">N/C</string>
     />
+
+    <string name="tests">Tests</string>
+
 
 </resources>
