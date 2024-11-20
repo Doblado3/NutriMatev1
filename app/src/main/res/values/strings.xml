@@ -6,5 +6,16 @@
 
     <string name="signUp">Registrarse</string>
     <string name="login">Acceder</string>
+    <string name="signOut">Cerrar Sesión</string>
+    <string name="actualizaBoton">Actualizar</string>
+    <string name="textoNombre">Nombre</string>
+    <string name="textoApellidos">Apellidos</string>
+    <string name="textoFechaNacMed">Fecha Nacimiento</string>
+    <string name="textoNumeroMovil">Teléfono</string>
+    <string name="textoSexo">Sexo:</string>
+    <string name="textoRadioHombre">Hombre</string>
+    <string name="textoMujer">Mujer</string>
+    <string name="textoNSexo">N/C</string>
+    />
 
 </resources>
