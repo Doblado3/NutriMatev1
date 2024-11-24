@@ -10,6 +10,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.nutrimatev1.medico.HomeMedicoActivity
+import com.example.nutrimatev1.paciente.HomePacienteActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -68,6 +70,31 @@ class AuthActivity : AppCompatActivity() {
                 }
             }
         }
+
+        btnLogin.setOnClickListener{
+            if(email.text.isNotBlank() && password.text.isNotBlank()){
+
+                auth.signInWithEmailAndPassword(
+
+                    email.text.toString(),
+                    password.text.toString()
+                ).addOnCompleteListener{ task ->
+
+                    if(task.isSuccessful){
+                        Log.i("INFO","Usuario logueado correctamente")
+                        val intent = Intent(this, HomePacienteActivity::class.java)
+                        startActivity(intent)
+
+                        email.text.clear()
+                        password.text.clear()
+                    }else{
+                        showAlert("Error logueando al usuario")
+                    }
+
+                }
+            }
+
+        }
     }
 
     //Mensaje de error en el registro
@@ -81,17 +108,8 @@ class AuthActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    //Si es un medico registrado en la base de datos, va al activity del medico, si no al paciente
-    //Descomentar cuando esten realizadas las pantallas del medico y del paciente
-    /*
-    private fun showHome(email: String){
-        if (email in emailMedicos){
-            startActivity(Intent(this, HomeMedicoActivity::class.java))
-        }else{
-            startActivity(Intent(this, HomePaciente::class.java))
-        }
-    }
-    */
+
+
 
 
 }
