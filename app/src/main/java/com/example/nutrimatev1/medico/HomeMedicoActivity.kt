@@ -20,7 +20,7 @@ class HomeMedicoActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_home_medico)
-
+        setSupportActionBar(findViewById(R.id.toolbar))
 
         medLogOut = findViewById(R.id.medLogOut)
 
