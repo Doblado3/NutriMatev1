@@ -11,9 +11,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.nutrimatev1.medico.HomeMedicoActivity
+import com.example.nutrimatev1.medico.InfoMedico
 import com.example.nutrimatev1.paciente.HomePacienteActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 
 class AuthActivity : AppCompatActivity() {
@@ -59,7 +61,7 @@ class AuthActivity : AppCompatActivity() {
                     if (task.isSuccessful){
                         // El registro se ha hecho de forma correcta
                         Log.i("INFO", "El usuario se ha registrado correctamente")
-                        //showHome(email.text.toString())
+                        showHome(email.text.toString())
                         email.text.clear() //Para que desaparezca de la pantalla si se registra correctamente y que no se quede escrito
                         password.text.clear()
                     } else{
@@ -82,8 +84,9 @@ class AuthActivity : AppCompatActivity() {
 
                     if(task.isSuccessful){
                         Log.i("INFO","Usuario logueado correctamente")
-                        val intent = Intent(this, HomePacienteActivity::class.java)
-                        startActivity(intent)
+                        showHome(email.text.toString())
+
+
 
                         email.text.clear()
                         password.text.clear()
@@ -106,6 +109,37 @@ class AuthActivity : AppCompatActivity() {
             .setPositiveButton("ACEPTAR", null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
+    }
+
+    private fun showHome(email: String) {
+        val col = FirebaseFirestore.getInstance()
+
+        // Verificar en la colección "medicos" usando el email como ID
+        col.collection("Medicos").document(email).get()
+            .addOnSuccessListener { medicoDoc ->
+                if (medicoDoc.exists()) {
+                    // Si el email está en "medicos", redirige a HomeMedicoActivity
+                    startActivity(Intent(this, HomeMedicoActivity::class.java))
+                } else {
+                    // Verificar en la colección "pacientes" usando el email como ID
+                    col.collection("Pacientes").document(email).get()
+                        .addOnSuccessListener { pacienteDoc ->
+                            if (pacienteDoc.exists()) {
+                                // Si el email está en "pacientes", redirige a HomePaciente
+                                startActivity(Intent(this, HomePacienteActivity::class.java))
+                            } else {
+                                // Manejar el caso en el que el email no esté en ninguna colección
+                                showAlert("El usuario no pertenece a ningún rol válido")
+                            }
+                        }
+                        .addOnFailureListener {
+                            showAlert("Error al comprobar la colección de pacientes")
+                        }
+                }
+            }
+            .addOnFailureListener {
+                showAlert("Error al comprobar la colección de médicos")
+            }
     }
 
 

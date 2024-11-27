@@ -12,7 +12,7 @@ import com.example.nutrimatev1.R
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class HomeMedicoActivity : AppCompatActivity() {
+class HomeMedicoActivity : BaseMedico() {
 
     private lateinit var medLogOut: Button
 

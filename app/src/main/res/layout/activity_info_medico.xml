@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:backgroundTint="@color/secondaryVariant"
+        android:onClick="onClickUpdate"
         android:text="@string/actualizaBoton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -20,16 +21,17 @@
         app:layout_constraintTop_toBottomOf="@+id/radioGroupMed" />
 
     <EditText
-        android:id="@+id/editTextTextEmailMed"
+        android:id="@+id/editTextEmailMed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
         android:ems="10"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/editTextNombreMed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/estetoscopio" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editTextNombreMed"
@@ -41,7 +43,7 @@
         app:layout_constraintBottom_toTopOf="@+id/editTextApellidosMed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextEmailMed" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextEmailMed" />
 
     <EditText
         android:id="@+id/editTextApellidosMed"
@@ -62,6 +64,7 @@
         android:ems="10"
         android:hint="@string/textoFechaNacMed"
         android:inputType="date"
+        android:onClick="onClickUpdate"
         app:layout_constraintBottom_toTopOf="@+id/editTextPhoneMed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -74,7 +77,7 @@
         android:ems="10"
         android:hint="@string/textoNumeroMovil"
         android:inputType="phone"
-        android:onClick="onClickUpdatePhone"
+        android:onClick="onClickUpdate"
         app:layout_constraintBottom_toTopOf="@+id/textSexMed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -122,18 +125,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextPhoneMed" />
 
-    <ImageView
-        android:id="@+id/estetoscopio"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="335dp"
-        android:layout_marginBottom="655dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_estetoscopio" />
+    <include
+        layout="@menu/toolbar_paciente" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

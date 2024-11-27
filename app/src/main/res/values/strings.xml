@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">NutriMatev1</string>
+    <string name="app_name">NutriMate</string>
 
     <string name="email">Correo electrónico</string>
     <string name="passwd">Contraseña</string>
