@@ -85,7 +85,8 @@ class AuthActivity : AppCompatActivity() {
                     if(task.isSuccessful){
                         Log.i("INFO","Usuario logueado correctamente")
                         showHome(email.text.toString())
-
+                        //intent = Intent(this, InfoMedico::class.java)
+                        //startActivity(intent)
 
 
                         email.text.clear()
