@@ -8,10 +8,7 @@ import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.example.nutrimatev1.medico.HomeMedicoActivity
-import com.example.nutrimatev1.medico.InfoMedico
+import com.example.nutrimatev1.medico.MainMedico
 import com.example.nutrimatev1.paciente.HomePacienteActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -120,7 +117,7 @@ class AuthActivity : AppCompatActivity() {
             .addOnSuccessListener { medicoDoc ->
                 if (medicoDoc.exists()) {
                     // Si el email está en "medicos", redirige a HomeMedicoActivity
-                    startActivity(Intent(this, HomeMedicoActivity::class.java))
+                    startActivity(Intent(this, MainMedico::class.java))
                 } else {
                     // Verificar en la colección "pacientes" usando el email como ID
                     col.collection("Pacientes").document(email).get()

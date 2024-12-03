@@ -2,11 +2,15 @@ package com.example.nutrimatev1.medico
 
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
+import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import com.example.nutrimatev1.R
 import com.google.firebase.Timestamp
@@ -16,7 +20,8 @@ import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.Locale
 
-class InfoMedico : BaseMedico() {
+
+class PerfilFragment : Fragment() {
 
     private lateinit var telefono: EditText
     private lateinit var textoSexo: TextView
@@ -24,36 +29,52 @@ class InfoMedico : BaseMedico() {
     private lateinit var apellidos: EditText
     private lateinit var fechaNac: EditText
     private lateinit var radioGroupMed: RadioGroup
-
-
     private lateinit var emailMed: EditText
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContentView(R.layout.activity_info_medico)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.fragment_perfil, container, false)
+    }
 
-        telefono = findViewById(R.id.editTextPhoneMed)
-        textoSexo = findViewById(R.id.textSexMed)
-        nombre = findViewById(R.id.editTextNombreMed)
-        apellidos = findViewById(R.id.editTextApellidosMed)
-        fechaNac = findViewById(R.id.editTextDateMed)
-        radioGroupMed = findViewById(R.id.radioGroupMed)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        emailMed = findViewById(R.id.editTextEmailMed)
+        // Initialize the views
+        telefono = view.findViewById(R.id.editTextPhoneMed)
+        textoSexo = view.findViewById(R.id.textSexMed)
+        nombre = view.findViewById(R.id.editTextNombreMed)
+        apellidos = view.findViewById(R.id.editTextApellidosMed)
+        fechaNac = view.findViewById(R.id.editTextDateMed)
+        radioGroupMed = view.findViewById(R.id.radioGroupMed)
+        emailMed = view.findViewById(R.id.editTextEmailMed)
 
+        // Set email as the current user's email and make it uneditable
         val user = Firebase.auth.currentUser
         user?.let {
             emailMed.setText(user.email)
             emailMed.isEnabled = false
         }
 
-        setSupportActionBar(findViewById(R.id.toolbar))
-
         mostrarInfoMedico()
 
+        view.findViewById<RadioButton>(R.id.radioHombre).setOnClickListener {
+            onRadioButtonClicked(it)
+        }
+        view.findViewById<RadioButton>(R.id.radioMujer).setOnClickListener {
+            onRadioButtonClicked(it)
+        }
+        view.findViewById<RadioButton>(R.id.radioNC).setOnClickListener {
+            onRadioButtonClicked(it)
+        }
 
 
+        // Button click listener
+        val updateButton: Button = view.findViewById(R.id.botonActualizarMed)
+        updateButton.setOnClickListener {
+            onClickUpdate(it)
+        }
     }
 
     fun onClickUpdate(v: View?) {
@@ -64,7 +85,7 @@ class InfoMedico : BaseMedico() {
             telefono.error = "Teléfono Incorrecto"
         }
 
-        //Comprobar la fecha
+        // Comprobar la fecha
         val e2 = Regex("^([0-2][0-9]|3[0-1])(\\/|-)(0[1-9]|1[0-2])\\2(\\d{4})\$")
         val ok2 = e2.matches(fechaNac.text.toString())
         if (!ok2) {
@@ -72,21 +93,16 @@ class InfoMedico : BaseMedico() {
             fechaNac.error = "Fecha Incorrecta"
         }
 
-        if (ok1 && ok2){
-
+        if (ok1 && ok2) {
             actualizarBD()
-
         }
-
     }
 
-    private fun actualizarBD(){
-        //acceder a la BD -> coleccion Pacientes
+    private fun actualizarBD() {
         val col = Firebase.firestore.collection("Medicos")
-
         val fecha = Timestamp(SimpleDateFormat("dd/MM/yyyy").parse(fechaNac.text.toString()))
 
-        //crear variable nuevosDatos con MapOf
+        // Create new data for the medical info
         val nuevosDatos = mapOf(
             "nombre" to nombre.text.toString(),
             "apellidos" to apellidos.text.toString(),
@@ -95,64 +111,38 @@ class InfoMedico : BaseMedico() {
             "telefono" to telefono.text.toString(),
         )
 
-        //acceder al documento del paciente actual(email) y
-        //modificar sus datos en la BD con set
-        //notificar al usuario
         col.document(emailMed.text.toString()).set(nuevosDatos)
             .addOnSuccessListener {
-
-                //mirar si hay cambio de contraseña y actualizarla
-
                 showAlert("Datos Actualizados")
-
             }
-
-            .addOnFailureListener{
-
-                showAlert("Error logueando al usuario")
-
+            .addOnFailureListener {
+                showAlert("Error actualizando los datos")
             }
-
-
     }
 
-    private fun showAlert(text: String){
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder
-            .setMessage(text)
+    private fun showAlert(text: String) {
+        val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+        builder.setMessage(text)
             .setTitle("Info")
-            .setPositiveButton("ACEPTAR", null)
+            .setPositiveButton("Aceptar", null)
         val dialog: AlertDialog = builder.create()
         dialog.show()
     }
 
-    fun onRadioButtonClicked(v: View?) {
-        var texto = ""
-        when (v?.id) {
-            R.id.radioHombre -> texto = "Hombre"
-            R.id.radioMujer -> texto = "Mujer"
-            R.id.radioNC -> texto = "N/C"
-        }
-
-        textoSexo.text = "Sexo: $texto"
-    }
-
     private fun mostrarInfoMedico() {
-        val col = Firebase.firestore.collection("Pacientes")
+        val col = Firebase.firestore.collection("Medicos")
         val user = Firebase.auth.currentUser
 
-        if (user != null) {
+        user?.let {
             val emailUsuario = user.email
             if (!emailUsuario.isNullOrEmpty()) {
                 col.document(emailUsuario).get()
                     .addOnSuccessListener { document ->
                         if (document != null && document.exists()) {
-                            // Rellenar los campos con los datos recuperados
                             nombre.setText(document.getString("nombre"))
                             apellidos.setText(document.getString("apellidos"))
                             telefono.setText(document.getString("telefono"))
 
-                            // Convertir la fecha (Timestamp) a formato legible
                             val fechaTimestamp = document.getTimestamp("fecha de nacimiento")
                             fechaTimestamp?.let {
                                 val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
@@ -160,7 +150,6 @@ class InfoMedico : BaseMedico() {
                                 fechaNac.setText(fechaFormateada)
                             }
 
-                            // Mostrar sexo en el TextView
                             val sexo = document.getString("sexo")
                             textoSexo.text = "Sexo: $sexo"
                         } else {
@@ -175,9 +164,19 @@ class InfoMedico : BaseMedico() {
                 Log.e("ERROR", "Email del usuario es nulo o vacío")
                 showAlert("Error: Email del usuario no disponible")
             }
-        } else {
+        } ?: run {
             Log.e("ERROR", "Usuario no autenticado")
             showAlert("Error: Usuario no autenticado")
         }
+    }
+
+    fun onRadioButtonClicked(v: View?) {
+        var texto = ""
+        when (v?.id) {
+            R.id.radioHombre -> texto = "Hombre"
+            R.id.radioMujer -> texto = "Mujer"
+            R.id.radioNC -> texto = "N/C"
+        }
+        textoSexo.text = "Sexo: $texto"
     }
 }

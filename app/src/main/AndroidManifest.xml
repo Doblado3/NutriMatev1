@@ -15,10 +15,8 @@
         <activity
             android:name=".paciente.TestsActivity"
             android:exported="false" />
-        <activity
-            android:name=".medico.InfoMedico"
-            android:exported="false" />
-        <activity android:name=".medico.HomeMedicoActivity" />
+
+        <activity android:name=".medico.MainMedico" />
         <activity
             android:name=".paciente.HomePacienteActivity"
             android:exported="false" />

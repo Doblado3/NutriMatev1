@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".medico.InfoMedico">
+    tools:context=".medico.PerfilFragment">
 
     <Button
         android:id="@+id/botonActualizarMed"
@@ -64,7 +65,6 @@
         android:ems="10"
         android:hint="@string/textoFechaNacMed"
         android:inputType="date"
-        android:onClick="onClickUpdate"
         app:layout_constraintBottom_toTopOf="@+id/editTextPhoneMed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -77,7 +77,6 @@
         android:ems="10"
         android:hint="@string/textoNumeroMovil"
         android:inputType="phone"
-        android:onClick="onClickUpdate"
         app:layout_constraintBottom_toTopOf="@+id/textSexMed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -97,22 +96,22 @@
             android:id="@+id/radioHombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="onRadioButtonClicked"
-            android:text="@string/textoRadioHombre" />
+            android:text="@string/textoRadioHombre"
+            />
 
         <RadioButton
             android:id="@+id/radioMujer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="onRadioButtonClicked"
-            android:text="@string/textoMujer" />
+            android:text="@string/textoMujer"
+            />
 
         <RadioButton
             android:id="@+id/radioNC"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="onRadioButtonClicked"
-            android:text="@string/textoNSexo" />
+            android:text="@string/textoNSexo"
+            />
     </RadioGroup>
 
     <TextView
@@ -125,7 +124,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextPhoneMed" />
 
-    <include
-        layout="@menu/toolbar_paciente" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
