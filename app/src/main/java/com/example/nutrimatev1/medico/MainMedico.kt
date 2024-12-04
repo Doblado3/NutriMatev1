@@ -18,6 +18,9 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import androidx.activity.OnBackPressedCallback
 
+/* Este es el activity encargado de soportar los distintos fragments que hemos creado
+ para usar el Navigation Drawer*/
+
 
 class MainMedico : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
@@ -29,6 +32,8 @@ class MainMedico : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
 
         drawerLayout = findViewById(R.id.drawer_layout_medico)
 
+        //Aunque técnicamente ya no usemos un toolbar, para abrir y cerrar
+        //el NavigationDrawer se requiere implementarlo
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
@@ -40,13 +45,15 @@ class MainMedico : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
+        //Establecemos que por defecto queremos mostrar el Home
         if (savedInstanceState == null) {
             replaceFragment(HomeFragment())
             navigationView.setCheckedItem(R.id.nav_home)
         }
 
 
-
+        //"Mecanismo" para hacer la "experiencia" de ir hacia atrás dentro de la app
+        //más fluida
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -59,7 +66,8 @@ class MainMedico : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
         })
     }
 
-
+    //Esta función se encarga de registrar qué item del Navigation Drawer hemos seleccionado
+    //y en funciíon de esto nos cambia las pantallas
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.nav_home -> replaceFragment(HomeFragment())
@@ -78,7 +86,8 @@ class MainMedico : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
     }
 
 
-
+    //Lógica del botón de cerrar sesión dentro del Navigation Drawer
+    //El funcionamiento de log out de Firebase es el mismo que usábamos para el toolbar
     private fun showLogoutConfirmationDialog(){
         val builder = AlertDialog.Builder(this, R.style.CustomAlertDialogTheme)
         builder.setTitle("Cerrar Sesión")

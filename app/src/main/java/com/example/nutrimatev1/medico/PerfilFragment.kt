@@ -41,6 +41,9 @@ class PerfilFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        /*Lo que antes era InfoMedico(Activity), ahora pasa a ser PerfilFragment
+        * el código es prácticamente el mismo*/
+
         // Initialize the views
         telefono = view.findViewById(R.id.editTextPhoneMed)
         textoSexo = view.findViewById(R.id.textSexMed)
@@ -59,6 +62,9 @@ class PerfilFragment : Fragment() {
 
         mostrarInfoMedico()
 
+        //Esta es la única parte que necesitamos cambiar. Las funciones públicas
+        //ya no se implementan en el XML sino que se hacen aquí en el Fragment
+        //a través de "setOnClickListener".
         view.findViewById<RadioButton>(R.id.radioHombre).setOnClickListener {
             onRadioButtonClicked(it)
         }
@@ -70,7 +76,8 @@ class PerfilFragment : Fragment() {
         }
 
 
-        // Button click listener
+        //Incluye tanto al botón de actualizar como a las "restricciones" de
+        //las expresiones regulares
         val updateButton: Button = view.findViewById(R.id.botonActualizarMed)
         updateButton.setOnClickListener {
             onClickUpdate(it)
