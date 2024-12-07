@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".IntroActivity">
+
+    <ScrollView
+        android:id="@+id/scrollView2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/scrollView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="398dp"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/nutritionist_intro3" />
+
+        <TextView
+            android:id="@+id/textIntro1"
+            android:layout_width="match_parent"
+            android:layout_height="88dp"
+            android:text="Bienvenido a NutriMate"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="31sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textIntro2"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:text="Tu mejor compañero nutricional"
+            android:textAlignment="center"
+            android:textColor="@color/primaryVariant"
+            android:textSize="31sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textIntro3"
+            android:layout_width="match_parent"
+            android:layout_height="79dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="Ya estés aquí para medir tu progreso, acceder a recursos
+            de expertos o buscando ayuda en momentos difíciles, vamos a ayudarte"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/introBtn"
+            style="@android:style/Widget.Button"
+            android:layout_width="match_parent"
+            android:layout_height="86dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="24dp"
+            android:background="@drawable/primary_background"
+            android:text="@string/signUp"
+            android:textColor="@color/white"
+            android:textSize="21sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/textIntro4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Ya tienes una cuenta? Inicia Sesión"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
