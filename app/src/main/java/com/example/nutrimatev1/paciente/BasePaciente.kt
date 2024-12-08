@@ -5,7 +5,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.example.nutrimatev1.AuthActivity
+import com.example.nutrimatev1.LoginActivity
 import com.example.nutrimatev1.R
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -27,7 +27,7 @@ open class BasePaciente: AppCompatActivity() {
             }
             R.id.item_log_out -> {
                 Firebase.auth.signOut() //Para cerrar la sesión al salir y que no se quede abierta
-                startActivity(Intent(this, AuthActivity::class.java))
+                startActivity(Intent(this, LoginActivity::class.java))
                 true
             }
             else -> super.onOptionsItemSelected(item)

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity">
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <EditText
+            android:id="@+id/ReditTextEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Email"
+            android:padding="16dp"/>
+
+        <EditText
+            android:id="@+id/ReditTextPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contraseña"
+            android:inputType="textPassword"
+            android:padding="16dp"/>
+
+        <EditText
+            android:id="@+id/ReditTextName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nombre"
+            android:padding="16dp"/>
+
+        <RadioGroup
+            android:id="@+id/RradioGroupRole"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/RradioMedico"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Médico"
+                android:padding="16dp"/>
+
+            <RadioButton
+                android:id="@+id/RradioPaciente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Paciente"
+                android:padding="16dp"/>
+        </RadioGroup>
+
+        <EditText
+            android:id="@+id/ReditTextApellidos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/textoApellidos"
+            android:padding="16dp"/>
+
+        <EditText
+            android:id="@+id/ReditTextDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/textoFechaNacMed"
+            android:inputType="date"
+            android:padding="16dp"/>
+
+        <EditText
+            android:id="@+id/ReditTextPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/textoNumeroMovil"
+            android:inputType="phone"
+            android:padding="16dp"/>
+
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Registrarse"
+            android:padding="16dp"
+            android:background="@color/primaryVariant"/>
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
