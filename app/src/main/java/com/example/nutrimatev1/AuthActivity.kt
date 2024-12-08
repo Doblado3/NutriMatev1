@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -22,7 +23,7 @@ class AuthActivity : AppCompatActivity() {
     private lateinit var email: EditText
     private lateinit var password: EditText
 
-    private lateinit var btnRegister: Button
+    private lateinit var txtRegister: TextView
     private lateinit var btnLogin: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,7 +35,7 @@ class AuthActivity : AppCompatActivity() {
         email = findViewById(R.id.editTextEmail)
         password = findViewById(R.id.editTextPassword)
 
-        btnRegister = findViewById(R.id.AUbtnRegister)
+        txtRegister = findViewById(R.id.txtRegister)
         btnLogin = findViewById(R.id.AUbtnLogin)
 
         auth =Firebase.auth
@@ -44,31 +45,6 @@ class AuthActivity : AppCompatActivity() {
     }
 
     fun setup(){
-        //Lógica botones de autenticación
-        btnRegister.setOnClickListener {
-            // Comprobar que el correo electrónico y la contraseña no estén vacíos
-            if(email.text.isNotBlank() && password.text.isNotBlank()){
-                // sí podemos registrar al usuario
-                //Log.i("INFO", email.text.toString()) //Debug
-                //Log.i("INFO", passwd.text.toString())
-                auth.createUserWithEmailAndPassword( //metodo concreto para la autenticacion de email y contraseña que hemos elegido
-                    email.text.toString(),
-                    password.text.toString()
-                ).addOnCompleteListener{task ->
-                    if (task.isSuccessful){
-                        // El registro se ha hecho de forma correcta
-                        Log.i("INFO", "El usuario se ha registrado correctamente")
-                        showHome(email.text.toString())
-                        email.text.clear() //Para que desaparezca de la pantalla si se registra correctamente y que no se quede escrito
-                        password.text.clear()
-                    } else{
-                        // Si ha habido algún fallo que aparezca un Toast
-                        //Toast.makeText(this,"Fallo en el registro",Toast.LENGTH_SHORT).show() //Aviso de fallo en el registro
-                        showAlert("Fallo en el registro") //Para que se muestre el mensaje de abajo al fallar el registro
-                    }
-                }
-            }
-        }
 
         btnLogin.setOnClickListener{
             if(email.text.isNotBlank() && password.text.isNotBlank()){
@@ -95,6 +71,9 @@ class AuthActivity : AppCompatActivity() {
                 }
             }
 
+        }
+        txtRegister.setOnClickListener(){
+            startActivity(Intent(this, RegisterActivity::class.java))
         }
     }
 

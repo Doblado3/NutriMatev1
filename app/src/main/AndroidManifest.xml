@@ -13,9 +13,11 @@
         android:theme="@style/Theme.NutriMatev1"
         tools:targetApi="31">
         <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
             android:name=".paciente.TestsActivity"
             android:exported="false" />
-
         <activity android:name=".medico.MainMedico" />
         <activity
             android:name=".paciente.HomePacienteActivity"
