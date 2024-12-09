@@ -35,6 +35,10 @@
     <string name="Compartir">Compartir</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="inicia_sesion">Ya tienes una cuenta? Inicia Sesión</string>
+    <string name="frase_intro_3">Ya estés aquí para medir tu progreso, acceder a recursos             de expertos o buscando ayuda en momentos difíciles, vamos a ayudarte</string>
+    <string name="compa">Tu mejor compañero nutricional</string>
+    <string name="welcome">Bienvenido a NutriMate</string>
 
 
 </resources>

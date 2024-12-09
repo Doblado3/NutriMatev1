@@ -36,26 +36,11 @@
             android:hint="Nombre"
             android:padding="16dp"/>
 
-        <RadioGroup
-            android:id="@+id/RradioGroupRole"
+        <Spinner
+            android:id="@+id/spinnerRole"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/RradioMedico"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Médico"
-                android:padding="16dp"/>
-
-            <RadioButton
-                android:id="@+id/RradioPaciente"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Paciente"
-                android:padding="16dp"/>
-        </RadioGroup>
+            android:padding="16dp"/>
 
         <EditText
             android:id="@+id/ReditTextApellidos"
@@ -80,13 +65,50 @@
             android:inputType="phone"
             android:padding="16dp"/>
 
+
+
+        <TextView
+            android:id="@+id/textRegisterSex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sexo:"
+            android:padding="16dp"/>
+
+        <RadioGroup
+            android:id="@+id/RradioGroupSexo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/RradioMasculino"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Masculino"
+                android:padding="16dp"/>
+
+            <RadioButton
+                android:id="@+id/RradioFemenino"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Femenino"
+                android:padding="16dp"/>
+            <RadioButton
+                android:id="@+id/RradioN_C"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="N/C"/>
+        </RadioGroup>
+
+
         <Button
             android:id="@+id/btnRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Registrarse"
             android:padding="16dp"
-            android:background="@color/primaryVariant"/>
+            android:backgroundTint="@color/primaryVariant"/>
+
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

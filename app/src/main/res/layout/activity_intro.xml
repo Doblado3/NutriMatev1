@@ -39,7 +39,7 @@
             android:id="@+id/textIntro1"
             android:layout_width="match_parent"
             android:layout_height="88dp"
-            android:text="Bienvenido a NutriMate"
+            android:text="@string/welcome"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="31sp"
@@ -49,7 +49,7 @@
             android:id="@+id/textIntro2"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:text="Tu mejor compañero nutricional"
+            android:text="@string/compa"
             android:textAlignment="center"
             android:textColor="@color/primaryVariant"
             android:textSize="31sp"
@@ -62,8 +62,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
-            android:text="Ya estés aquí para medir tu progreso, acceder a recursos
-            de expertos o buscando ayuda en momentos difíciles, vamos a ayudarte"
+            android:text="@string/frase_intro_3"
             android:textAlignment="center"
             android:textColor="@color/black"
             android:textSize="15sp" />
@@ -87,9 +86,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Ya tienes una cuenta? Inicia Sesión"
+            android:clickable="true"
+            android:text="@string/inicia_sesion"
             android:textAlignment="center"
             android:textColor="@color/black"
-            android:textSize="18sp" />
+            android:textSize="18sp"
+            android:textStyle="bold" />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
