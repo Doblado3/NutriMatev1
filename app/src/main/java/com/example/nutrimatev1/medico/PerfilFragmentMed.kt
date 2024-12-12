@@ -21,7 +21,7 @@ import java.text.SimpleDateFormat
 import java.util.Locale
 
 
-class PerfilFragment : Fragment() {
+class PerfilFragmentMed : Fragment() {
 
     private lateinit var telefono: EditText
     private lateinit var textoSexo: TextView
@@ -35,13 +35,13 @@ class PerfilFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_perfil, container, false)
+        return inflater.inflate(R.layout.fragment_perfil_med, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        /*Lo que antes era InfoMedico(Activity), ahora pasa a ser PerfilFragment
+        /*Lo que antes era InfoMedico(Activity), ahora pasa a ser PerfilFragmentMed
         * el código es prácticamente el mismo*/
 
         // Initialize the views

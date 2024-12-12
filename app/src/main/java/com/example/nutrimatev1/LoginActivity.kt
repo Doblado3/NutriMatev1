@@ -9,7 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.nutrimatev1.medico.MainMedico
-import com.example.nutrimatev1.paciente.HomePacienteActivity
+import com.example.nutrimatev1.paciente.MainPaciente
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -101,7 +101,7 @@ class LoginActivity : AppCompatActivity() {
                         .addOnSuccessListener { pacienteDoc ->
                             if (pacienteDoc.exists()) {
                                 // Si el email está en "pacientes", redirige a HomePaciente
-                                startActivity(Intent(this, HomePacienteActivity::class.java))
+                                startActivity(Intent(this, MainPaciente::class.java))
                             } else {
                                 // Manejar el caso en el que el email no esté en ninguna colección
                                 showAlert("El usuario no pertenece a ningún rol válido")

@@ -25,7 +25,7 @@ class TestsActivity : AppCompatActivity() {
 
         //Boton de volver
         findViewById<View>(R.id.btnVolver).setOnClickListener {
-            val intent = Intent(this, HomePacienteActivity::class.java)
+            val intent = Intent(this, MainPaciente::class.java)
             startActivity(intent)
         }
     }

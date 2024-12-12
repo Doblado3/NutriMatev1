@@ -1,39 +1,39 @@
-package com.example.nutrimatev1.medico
+package com.example.nutrimatev1.paciente
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.GravityCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import com.example.nutrimatev1.LoginActivity
 import com.example.nutrimatev1.R
 import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
-import androidx.activity.OnBackPressedCallback
 
-/* Este es el activity encargado de soportar los distintos fragments que hemos creado
- para usar el Navigation Drawer*/
-
-
-class MainMedico : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainPaciente : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawerLayout: DrawerLayout
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main_medico)
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_main_paciente)
 
-        drawerLayout = findViewById(R.id.drawer_layout_medico)
+        drawerLayout = findViewById(R.id.drawer_layout_paciente)
 
-        //Aunque técnicamente ya no usemos un toolbar, para abrir y cerrar
-        //el NavigationDrawer se requiere implementarlo
-        val toolbar = findViewById<Toolbar>(R.id.toolbar_medico)
+        val toolbar = findViewById<Toolbar>(R.id.toolbar_paciente)
         setSupportActionBar(toolbar)
 
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
@@ -44,15 +44,17 @@ class MainMedico : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        //Establecemos que por defecto queremos mostrar el Home
-        if (savedInstanceState == null) {
-            replaceFragment(HomeFragmentMed())
+        if (savedInstanceState == null){
+            replaceFragment(HomeFragmentPac())
             navigationView.setCheckedItem(R.id.nav_home)
         }
 
 
-        //"Mecanismo" para hacer la "experiencia" de ir hacia atrás dentro de la app
-        //más fluida
+
+
+
+
+
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -63,30 +65,42 @@ class MainMedico : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
                 }
             }
         })
+
+
     }
 
-    //Esta función se encarga de registrar qué item del Navigation Drawer hemos seleccionado
-    //y en funciíon de esto nos cambia las pantallas
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.nav_home -> replaceFragment(HomeFragmentMed())
-            R.id.nav_perfil -> replaceFragment(PerfilFragmentMed())
+        when(item.itemId){
+            R.id.nav_home -> replaceFragment(HomeFragmentPac())
+            R.id.nav_perfil -> replaceFragment(HomeFragmentPac())
             R.id.nav_logout -> showLogoutConfirmationDialog()
-
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
     }
 
-    private fun replaceFragment(fragment: Fragment) {
-        val transaction = supportFragmentManager.beginTransaction()
+    private fun replaceFragment(fragment: Fragment){
+        val transaction: FragmentTransaction = supportFragmentManager.beginTransaction()
         transaction.replace(R.id.fragment_container, fragment)
         transaction.commit()
     }
 
 
-    //Lógica del botón de cerrar sesión dentro del Navigation Drawer
-    //El funcionamiento de log out de Firebase es el mismo que usábamos para el toolbar
+
+    //Función para clickear los botones
+    //Solo implementado para el botón de tests
+    fun onClickHomePacientes(v: View?) {
+        when (v?.id) {
+            R.id.LLTests -> {
+                intent = Intent(this, TestsActivity::class.java)
+                startActivity(intent)
+            }
+            else -> {
+                Toast.makeText(this, "Aún no hay activity", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
     private fun showLogoutConfirmationDialog(){
         val builder = AlertDialog.Builder(this, R.style.CustomAlertDialogTheme)
         builder.setTitle("Cerrar Sesión")
@@ -101,4 +115,6 @@ class MainMedico : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
             .show()
 
     }
+
+
 }
