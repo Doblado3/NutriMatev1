@@ -6,14 +6,20 @@
     android:layout_height="match_parent"
     tools:context=".medico.HomeFragmentMed">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/textView_numPacientes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fragment Home"
-        android:textSize="30sp"
-        android:layout_centerInParent="true"
-        android:textColor="@color/secondaryVariant"
-        />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="122dp"
+        android:text="TextView" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView_Pacientes"
+        android:layout_width="281dp"
+        android:layout_height="355dp"
+        android:layout_below="@id/textView_numPacientes"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp" />
 
 </RelativeLayout>
