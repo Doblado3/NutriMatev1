@@ -12,6 +12,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.nutrimatev1.modelo.Alert
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -59,13 +60,13 @@ class RegisterActivity : AppCompatActivity() {
                         val selectedSexo = findViewById<RadioButton>(selectedSexoId).text.toString()
                         registerUser(email.text.toString(), password.text.toString(), name.text.toString(), selectedRole, selectedSexo)
                     } else {
-                        showAlert("Por favor, selecciona un sexo")
+                        Alert.showAlert(this,"Por favor, selecciona un sexo")
                     }
                 } else {
-                    showAlert("Por favor, selecciona un rol válido")
+                    Alert.showAlert(this,"Por favor, selecciona un rol válido")
                 }
             } else {
-                showAlert("Por favor, completa todos los campos")
+                Alert.showAlert(this,"Por favor, completa todos los campos")
             }
         }
     }
@@ -80,9 +81,9 @@ class RegisterActivity : AppCompatActivity() {
                 } else {
                     val exception = task.exception
                     if (exception is FirebaseAuthException) {
-                        showAlert("Error en el registro: ${exception.message}")
+                        Alert.showAlert(this,"Error en el registro: ${exception.message}")
                     } else {
-                        showAlert("Fallo en el registro")
+                        Alert.showAlert(this,"Fallo en el registro")
                     }
                 }
             }
@@ -104,17 +105,10 @@ class RegisterActivity : AppCompatActivity() {
                 finish()
             }
             .addOnFailureListener {
-                showAlert("Error guardando el usuario en Firestore")
+                Alert.showAlert(this,"Error guardando el usuario en Firestore")
             }
     }
 
-    private fun showAlert(text: String) {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder.setMessage(text)
-            .setTitle("Error")
-            .setPositiveButton("ACEPTAR", null)
-        val dialog: AlertDialog = builder.create()
-        dialog.show()
-    }
+
 
 }

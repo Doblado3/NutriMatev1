@@ -13,6 +13,7 @@ import android.widget.RadioGroup
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.example.nutrimatev1.R
+import com.example.nutrimatev1.modelo.Alert
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -120,21 +121,13 @@ class PerfilFragmentMed : Fragment() {
 
         col.document(emailMed.text.toString()).set(nuevosDatos)
             .addOnSuccessListener {
-                showAlert("Datos Actualizados")
+                Alert.showAlert(requireContext(),"Datos Actualizados")
             }
             .addOnFailureListener {
-                showAlert("Error actualizando los datos")
+                Alert.showAlert(requireContext(),"Error actualizando los datos")
             }
     }
 
-    private fun showAlert(text: String) {
-        val builder: AlertDialog.Builder = AlertDialog.Builder(requireContext())
-        builder.setMessage(text)
-            .setTitle("Info")
-            .setPositiveButton("Aceptar", null)
-        val dialog: AlertDialog = builder.create()
-        dialog.show()
-    }
 
     private fun mostrarInfoMedico() {
         val col = Firebase.firestore.collection("Medicos")
@@ -160,20 +153,20 @@ class PerfilFragmentMed : Fragment() {
                             val sexo = document.getString("sexo")
                             textoSexo.text = "Sexo: $sexo"
                         } else {
-                            showAlert("No se encontraron datos para este usuario")
+                            Alert.showAlert(requireContext(),"No se encontraron datos para este usuario")
                         }
                     }
                     .addOnFailureListener { e ->
                         Log.e("ERROR", "Error al obtener los datos del paciente", e)
-                        showAlert("Error al obtener los datos del paciente")
+                        Alert.showAlert(requireContext(),"Error al obtener los datos del paciente")
                     }
             } else {
                 Log.e("ERROR", "Email del usuario es nulo o vacío")
-                showAlert("Error: Email del usuario no disponible")
+                Alert.showAlert(requireContext(),"Error: Email del usuario no disponible")
             }
         } ?: run {
             Log.e("ERROR", "Usuario no autenticado")
-            showAlert("Error: Usuario no autenticado")
+            Alert.showAlert(requireContext(),"Error: Usuario no autenticado")
         }
     }
 

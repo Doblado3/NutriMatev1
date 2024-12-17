@@ -9,6 +9,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import com.example.nutrimatev1.medico.MainMedico
+import com.example.nutrimatev1.modelo.Alert
 import com.example.nutrimatev1.paciente.MainPaciente
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -66,7 +67,7 @@ class LoginActivity : AppCompatActivity() {
                         email.text.clear()
                         password.text.clear()
                     }else{
-                        showAlert("Error logueando al usuario")
+                        Alert.showAlert(this,"Error logueando al usuario")
                     }
 
                 }
@@ -76,15 +77,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     //Mensaje de error en el registro
-    private fun showAlert(text: String){
-        val builder: AlertDialog.Builder = AlertDialog.Builder(this)
-        builder
-            .setMessage(text)
-            .setTitle("Error")
-            .setPositiveButton("ACEPTAR", null)
-        val dialog: AlertDialog = builder.create()
-        dialog.show()
-    }
+
 
     private fun showHome(email: String) {
         val col = FirebaseFirestore.getInstance()
@@ -104,16 +97,16 @@ class LoginActivity : AppCompatActivity() {
                                 startActivity(Intent(this, MainPaciente::class.java))
                             } else {
                                 // Manejar el caso en el que el email no esté en ninguna colección
-                                showAlert("El usuario no pertenece a ningún rol válido")
+                                Alert.showAlert(this,"El usuario no pertenece a ningún rol válido")
                             }
                         }
                         .addOnFailureListener {
-                            showAlert("Error al comprobar la colección de pacientes")
+                            Alert.showAlert(this,"Error al comprobar la colección de pacientes")
                         }
                 }
             }
             .addOnFailureListener {
-                showAlert("Error al comprobar la colección de médicos")
+                Alert.showAlert(this,"Error al comprobar la colección de médicos")
             }
     }
 
