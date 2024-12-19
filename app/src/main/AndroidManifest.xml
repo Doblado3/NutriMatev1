@@ -32,9 +32,6 @@
             android:exported="false" />
         <activity android:name=".medico.MainMedico" />
         <activity
-            android:name=".paciente.HomePacienteActivity"
-            android:exported="false" />
-        <activity
             android:name=".LoginActivity"
             android:exported="false" />
     </application>

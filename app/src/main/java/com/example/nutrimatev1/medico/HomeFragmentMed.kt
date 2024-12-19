@@ -8,9 +8,12 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Recycler
 import com.example.nutrimatev1.R
+import com.example.nutrimatev1.modelo.Alert
 import com.example.nutrimatev1.modelo.Paciente
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import java.util.Calendar
 
 class HomeFragmentMed : Fragment() {
@@ -33,24 +36,65 @@ class HomeFragmentMed : Fragment() {
         numPacientes = view.findViewById(R.id.textView_numPacientes)
         listaPacientes = view.findViewById(R.id.recyclerView_Pacientes)
 
-        val adaptadorPacientes = AdaptadorPacientes(leePacientes())
-
-        listaPacientes.layoutManager = LinearLayoutManager(requireContext())
-        listaPacientes.adapter = adaptadorPacientes
-
-        numPacientes.text = "Tienes " + adaptadorPacientes.itemCount + " pacientes asignados"
+        muestraPacientes()
 
 
     }
 
-    private fun leePacientes(): List<Paciente> {
-        return listOf(Paciente("Pepito", Calendar.getInstance()),
-            Paciente("Pepita", Calendar.getInstance()),
-            Paciente("Pepon", Calendar.getInstance()))
+    private fun muestraPacientes(): Unit {
+        var pacientes = mutableListOf<Paciente>()
+        Firebase.firestore.collection("Medicos")
+            .document(Firebase.auth.currentUser!!.email.toString())
+            .collection("pacientes")
+            .get()
+            .addOnSuccessListener { docs ->
+                for (d in docs){
+
+                    var pac_nom = d.get("Nombre").toString()
+                    var fechaNac = Calendar.getInstance()
+                    fechaNac.time = d.getTimestamp("fecha de nacimiento")?.toDate()
+
+                    pacientes.add(Paciente(d.id,pac_nom, fechaNac))
+
+
+
+                }
+
+                val adaptadorPacientes = AdaptadorPacientes(pacientes){it -> onClickPaciente(it)}
+
+                listaPacientes.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                listaPacientes.adapter = adaptadorPacientes
+
+
+
+
+                numPacientes.text = "Hay " + adaptadorPacientes.itemCount + " pacientes"
+            }
+            .addOnFailureListener{
+
+                Alert.showAlert(requireContext(), "Hay un error")
+            }
 
     }
 
-    inner class AdaptadorPacientes(private val dataSet: List<Paciente>):
+    fun onClickPaciente(paciente: Paciente){
+
+        val fragment = DetallesPacFragmentMed()
+        fragment.arguments = Bundle().apply {
+            putString("id", paciente.id)
+            putString("nombre", paciente.nombre)
+            putSerializable("fechaNacimiento", paciente.fechanac)
+        }
+
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment) // Ajusta el ID al contenedor de tus fragments
+            .addToBackStack(null) // Permite volver atrás
+            .commit()
+
+
+    }
+
+    inner class AdaptadorPacientes(private val dataSet: List<Paciente>, private val clickListener: (Paciente)->Unit):
             RecyclerView.Adapter<AdaptadorPacientes.ViewHolder>(){
 
                 inner class ViewHolder(view: View): RecyclerView.ViewHolder(view){
@@ -79,6 +123,8 @@ class HomeFragmentMed : Fragment() {
             val dateFormat = java.text.SimpleDateFormat("dd/MM/yyyy HH:mm", java.util.Locale.getDefault())
             val formattedDate = dateFormat.format(dataSet[position].fechanac.time)
             holder.textView_fch.text = formattedDate
+            holder.itemView.setOnClickListener{clickListener(dataSet[position])}
+
         }
 
     }
