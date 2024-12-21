@@ -35,8 +35,11 @@ class HomeFragmentPac : Fragment() {
     private fun onClickHomePacientes(v: View?) {
         when (v?.id) {
             R.id.LLTests -> {
-                val intent = Intent(requireContext(), TestsActivity::class.java)
-                startActivity(intent)
+                val fragment = TestsFragmentPac()
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .addToBackStack(null)
+                    .commit()
             }
             else -> {
                 Toast.makeText(requireContext(), "Aún no hay activity", Toast.LENGTH_SHORT).show()
