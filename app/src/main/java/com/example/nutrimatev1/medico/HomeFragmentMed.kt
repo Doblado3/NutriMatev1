@@ -20,6 +20,8 @@ class HomeFragmentMed : Fragment() {
 
     private lateinit var numPacientes: TextView
     private lateinit var listaPacientes: RecyclerView
+    private lateinit var nomMed: TextView
+
 
 
     override fun onCreateView(
@@ -35,10 +37,37 @@ class HomeFragmentMed : Fragment() {
 
         numPacientes = view.findViewById(R.id.textView_numPacientes)
         listaPacientes = view.findViewById(R.id.recyclerView_Pacientes)
+        nomMed = view.findViewById(R.id.textNombreMedHome)
 
         muestraPacientes()
+        muestraNombreMed()
 
 
+    }
+
+    private fun muestraNombreMed() {
+        //accedemos al nombre del médico registrado con su email
+        val userEmail = Firebase.auth.currentUser?.email
+
+        if (userEmail != null) {
+            Firebase.firestore.collection("Medicos")
+                .document(userEmail)
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document != null && document.exists()) {
+                        val nombreMedico = document.getString("nombre") ?: "Médico"
+                        nomMed.text = "Bienvenido, $nombreMedico"
+                    } else {
+                        nomMed.text = "Bienvenido, Médico"
+                    }
+                }
+                .addOnFailureListener {
+                    nomMed.text = "Bienvenido, Médico"
+                    Alert.showAlert(requireContext(), "Error al cargar el nombre del médico")
+                }
+        } else {
+            nomMed.text = "Bienvenido, Médico"
+        }
     }
 
     private fun muestraPacientes(): Unit {
@@ -120,7 +149,7 @@ class HomeFragmentMed : Fragment() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             holder.textView_nom.text = dataSet[position].nombre
-            val dateFormat = java.text.SimpleDateFormat("dd/MM/yyyy HH:mm", java.util.Locale.getDefault())
+            val dateFormat = java.text.SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault())
             val formattedDate = dateFormat.format(dataSet[position].fechanac.time)
             holder.textView_fch.text = formattedDate
             holder.itemView.setOnClickListener{clickListener(dataSet[position])}

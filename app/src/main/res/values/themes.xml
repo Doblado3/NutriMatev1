@@ -10,6 +10,10 @@
     </style>
 
     <style name="Theme.NutriMatev1" parent="Base.Theme.NutriMatev1" />
+    <style name="circleImage">
+        <item name="cornerSize">50%</item>
+        <item name="cornerFamily">rounded</item>
+    </style>
 
     <style name="CustomAlertDialogTheme" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
         <item name="buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
