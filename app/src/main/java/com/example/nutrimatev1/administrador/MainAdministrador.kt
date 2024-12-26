@@ -1,4 +1,4 @@
-package com.example.nutrimatev1.paciente
+package com.example.nutrimatev1.administrador
 
 import android.content.Intent
 import android.os.Bundle
@@ -23,17 +23,17 @@ import com.google.android.material.navigation.NavigationView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
-class MainPaciente : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainAdministrador : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private lateinit var drawerLayout: DrawerLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_main_paciente)
+        setContentView(R.layout.activity_main_administrador)
 
-        drawerLayout = findViewById(R.id.drawer_layout_paciente)
+        drawerLayout = findViewById(R.id.drawer_layout_administrador)
 
-        val toolbar = findViewById<Toolbar>(R.id.toolbar_paciente)
+        val toolbar = findViewById<Toolbar>(R.id.toolbar_administrador)
         setSupportActionBar(toolbar)
 
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
@@ -45,7 +45,7 @@ class MainPaciente : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         if (savedInstanceState == null){
-            replaceFragment(HomeFragmentPac())
+            replaceFragment(HomeFragmentAdm())
             navigationView.setCheckedItem(R.id.nav_home)
         }
 
@@ -71,8 +71,8 @@ class MainPaciente : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            R.id.nav_home -> replaceFragment(HomeFragmentPac())
-            R.id.nav_perfil -> replaceFragment(HomeFragmentPac())
+            R.id.nav_home -> replaceFragment(HomeFragmentAdm())
+            R.id.nav_perfil -> replaceFragment(HomeFragmentAdm())
             R.id.nav_logout -> showLogoutConfirmationDialog()
         }
         drawerLayout.closeDrawer(GravityCompat.START)

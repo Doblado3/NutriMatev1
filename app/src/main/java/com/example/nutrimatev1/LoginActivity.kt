@@ -8,6 +8,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.example.nutrimatev1.administrador.MainAdministrador
 import com.example.nutrimatev1.medico.MainMedico
 import com.example.nutrimatev1.modelo.Alert
 import com.example.nutrimatev1.paciente.MainPaciente
@@ -87,35 +88,46 @@ class LoginActivity : AppCompatActivity() {
 
     //Mensaje de error en el registro
 
-
     private fun showHome(email: String) {
         val col = FirebaseFirestore.getInstance()
 
-        // Verificar en la colección "medicos" usando el email como ID
+        // Verificar en la colección "Medicos" usando el email como ID
         col.collection("Medicos").document(email).get()
             .addOnSuccessListener { medicoDoc ->
                 if (medicoDoc.exists()) {
-                    // Si el email está en "medicos", redirige a HomeMedicoActivity
+                    // Si el email está en "Medicos", redirige a MainMedico
                     startActivity(Intent(this, MainMedico::class.java))
                 } else {
-                    // Verificar en la colección "pacientes" usando el email como ID
-                    col.collection("Pacientes").document(email).get()
-                        .addOnSuccessListener { pacienteDoc ->
-                            if (pacienteDoc.exists()) {
-                                // Si el email está en "pacientes", redirige a HomePaciente
-                                startActivity(Intent(this, MainPaciente::class.java))
+                    // Verificar en la colección "Administrativos" usando el email como ID
+                    col.collection("Administrativos").document(email).get()
+                        .addOnSuccessListener { adminDoc ->
+                            if (adminDoc.exists()) {
+                                // Si el email está en "Administrativos", redirige a MainAdministrador
+                                startActivity(Intent(this, MainAdministrador::class.java))
                             } else {
-                                // Manejar el caso en el que el email no esté en ninguna colección
-                                Alert.showAlert(this,"El usuario no pertenece a ningún rol válido")
+                                // Verificar en la colección "Pacientes" usando el email como ID
+                                col.collection("Pacientes").document(email).get()
+                                    .addOnSuccessListener { pacienteDoc ->
+                                        if (pacienteDoc.exists()) {
+                                            // Si el email está en "Pacientes", redirige a MainPaciente
+                                            startActivity(Intent(this, MainPaciente::class.java))
+                                        } else {
+                                            // Manejar el caso en el que el email no esté en ninguna colección
+                                            Alert.showAlert(this, "El usuario no pertenece a ningún rol válido")
+                                        }
+                                    }
+                                    .addOnFailureListener {
+                                        Alert.showAlert(this, "Error al comprobar la colección de pacientes")
+                                    }
                             }
                         }
                         .addOnFailureListener {
-                            Alert.showAlert(this,"Error al comprobar la colección de pacientes")
+                            Alert.showAlert(this, "Error al comprobar la colección de administrativos")
                         }
                 }
             }
             .addOnFailureListener {
-                Alert.showAlert(this,"Error al comprobar la colección de médicos")
+                Alert.showAlert(this, "Error al comprobar la colección de médicos")
             }
     }
 

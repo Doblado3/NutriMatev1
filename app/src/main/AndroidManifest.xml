@@ -32,9 +32,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".paciente.TestsActivity"
+            android:name=".administrador.MainAdministrador"
             android:exported="false" />
-        <activity android:name=".medico.MainMedico" />
     </application>
 
 </manifest>

@@ -12,6 +12,7 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.example.nutrimatev1.administrador.MainAdministrador
 import com.example.nutrimatev1.medico.MainMedico
 import com.example.nutrimatev1.modelo.Alert
 import com.example.nutrimatev1.paciente.MainPaciente
@@ -69,8 +70,15 @@ class RegisterActivity : AppCompatActivity() {
         // Define the regex for doctors' emails (adjust the pattern as needed)
         val doctorEmailRegex = Regex("^[a-zA-Z0-9._%+-]+@hospital\\.com\$")
 
+
+        val adminEmailRegex = Regex("^[a-zA-Z0-9._%+-]+@adm\\.com\$")
+
         // Determine role based on email
-        val role = if (doctorEmailRegex.matches(email)) "Médico" else "Paciente"
+        val role = when {
+            doctorEmailRegex.matches(email) -> "Médico"
+            adminEmailRegex.matches(email) -> "Administrativo"
+            else -> "Paciente"
+        }
 
         Firebase.auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
@@ -96,15 +104,21 @@ class RegisterActivity : AppCompatActivity() {
             "sexo" to sexo,
         )
 
-        val collection = if (role == "Médico") "Medicos" else "Pacientes"
+        val collection = when (role) {
+            "Médico" -> "Medicos"
+            "Administrativo" -> "Administrativos"
+            else -> "Pacientes"
+        }
+
         FirebaseFirestore.getInstance().collection(collection).document(email).set(user)
             .addOnSuccessListener {
                 Log.i("INFO", "Usuario guardado en Firestore")
-                if (role == "Médico"){
-                    startActivity(Intent(this, MainMedico::class.java))
-                } else{
-                    startActivity(Intent(this, MainPaciente::class.java))
+                val intent = when (role) {
+                    "Médico" -> Intent(this, MainMedico::class.java)
+                    "Administrativo" -> Intent(this, MainAdministrador::class.java)
+                    else -> Intent(this, MainPaciente::class.java)
                 }
+                startActivity(intent)
                 finish()
             }
             .addOnFailureListener {
