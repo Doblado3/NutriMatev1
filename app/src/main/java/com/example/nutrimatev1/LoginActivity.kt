@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.nutrimatev1.medico.MainMedico
@@ -21,6 +22,7 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var email: EditText
     private lateinit var password: EditText
+    private lateinit var textoReg: TextView
 
 
     private lateinit var btnLogin: Button
@@ -33,11 +35,13 @@ class LoginActivity : AppCompatActivity() {
         //Asignacion de variables del xml con lo del xml
         email = findViewById(R.id.editTextEmail)
         password = findViewById(R.id.editTextPassword)
+        textoReg = findViewById(R.id.textNuevaCuenta)
 
 
         btnLogin = findViewById(R.id.AUbtnLogin)
 
         auth =Firebase.auth
+
 
         //Funciones para ejecutar en el main
         setup()
@@ -45,6 +49,11 @@ class LoginActivity : AppCompatActivity() {
 
     fun setup(){
         //Lógica botones de autenticación
+
+        textoReg.setOnClickListener {
+            val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
 
 
         btnLogin.setOnClickListener{
@@ -65,6 +74,7 @@ class LoginActivity : AppCompatActivity() {
 
                         email.text.clear()
                         password.text.clear()
+
                     }else{
                         Alert.showAlert(this,"Error logueando al usuario")
                     }

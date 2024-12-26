@@ -19,6 +19,10 @@
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".IntroActivity"
             android:exported="true">
             <intent-filter>
@@ -31,9 +35,6 @@
             android:name=".paciente.TestsActivity"
             android:exported="false" />
         <activity android:name=".medico.MainMedico" />
-        <activity
-            android:name=".LoginActivity"
-            android:exported="false" />
     </application>
 
 </manifest>
