@@ -1,14 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
     tools:context=".administrador.AddTestsFragmentAdm">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <EditText
+        android:id="@+id/nombreNewTest"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Fragment par añadir tests" />
+        android:layout_height="wrap_content"
+        android:hint="Título del test" />
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/descripcionNewTest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Descripción breve" />
+
+    <EditText
+        android:id="@+id/preguntasNewTest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Preguntas (separadas por comas)" />
+
+    <EditText
+        android:id="@+id/opcionesNewTest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Opciones (separadas por comas)" />
+
+    <EditText
+        android:id="@+id/valoresNewTest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Valores (separados por comas)" />
+
+    <EditText
+        android:id="@+id/explicacionNewTest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Explicación para la interpretación" />
+
+    <Button
+        android:id="@+id/buttonAddNewTest"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Añadir Test"
+        android:layout_gravity="center_horizontal" />
+</LinearLayout>

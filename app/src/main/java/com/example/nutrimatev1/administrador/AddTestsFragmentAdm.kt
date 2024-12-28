@@ -5,56 +5,69 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.EditText
 import com.example.nutrimatev1.R
+import com.google.firebase.firestore.FirebaseFirestore
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [AddTestsFragmentAdm.newInstance] factory method to
- * create an instance of this fragment.
- */
+
+
 class AddTestsFragmentAdm : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var nombreNewTest: EditText
+    private lateinit var descripcionNewTest: EditText
+    private lateinit var preguntasNewTest: EditText
+    private lateinit var opcionesNewTest: EditText
+    private lateinit var valoresNewTest: EditText
+    private lateinit var explicacionNewTest: EditText
+    private lateinit var buttonAddNewTest: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_add_tests_adm, container, false)
+        val view = inflater.inflate(R.layout.fragment_add_tests_adm, container, false)
+
+        nombreNewTest = view.findViewById(R.id.nombreNewTest)
+        descripcionNewTest = view.findViewById(R.id.descripcionNewTest)
+        preguntasNewTest = view.findViewById(R.id.preguntasNewTest)
+        opcionesNewTest = view.findViewById(R.id.opcionesNewTest)
+        valoresNewTest = view.findViewById(R.id.valoresNewTest)
+        explicacionNewTest = view.findViewById(R.id.explicacionNewTest)
+        buttonAddNewTest = view.findViewById(R.id.buttonAddNewTest)
+
+        buttonAddNewTest.setOnClickListener {
+            addTestToFirestore()
+        }
+
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment AddTestsFragmentAdm.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            AddTestsFragmentAdm().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    private fun addTestToFirestore() {
+        val title = nombreNewTest.text.toString()
+        val description = descripcionNewTest.text.toString()
+        val questions = preguntasNewTest.text.toString().split(",").map { it.trim() }
+        val options = opcionesNewTest.text.toString().split(",").map { it.trim() }
+        val values = valoresNewTest.text.toString().split(",").map { it.trim() }
+        val explanation = explicacionNewTest.text.toString()
+
+        val test = hashMapOf(
+            "title" to title,
+            "description" to description,
+            "questions" to questions,
+            "options" to options,
+            "values" to values,
+            "explanation" to explanation
+        )
+
+        val db = FirebaseFirestore.getInstance()
+        db.collection("Tests").add(test)
+            .addOnSuccessListener {
+                // Test añadido correctamente
+            }
+            .addOnFailureListener {
+                // Error al añadir el test
             }
     }
 }

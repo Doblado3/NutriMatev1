@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nutrimatev1.R
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class TestsFragmentPac : Fragment() {
@@ -17,6 +18,8 @@ class TestsFragmentPac : Fragment() {
 
     private lateinit var recyclerViewTests: RecyclerView
     private lateinit var testAdapter: TestAdapter
+    private val testTitles = mutableListOf<String>()
+    private lateinit var tvTitleTestsPac: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,34 +36,63 @@ class TestsFragmentPac : Fragment() {
         recyclerViewTests.addItemDecoration(
             DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
         )
-        // Simular lista de tests disponibles
-        val tests = listOf(
-            "Test 1",
-            "Test 2",
-            "Test 3",
-            "Test 4"
-        )
 
         // Configurar el adaptador
-        testAdapter = TestAdapter(tests)
+        testAdapter = TestAdapter(testTitles)
         recyclerViewTests.adapter = testAdapter
 
-        // Actualizar el TextView con el número de tests
-        val tvTitleTestsPac: TextView = view.findViewById(R.id.tvTitleTestsPac)
-        tvTitleTestsPac.text = "Tests Disponibles = ${tests.size}"
+
+        tvTitleTestsPac = view.findViewById(R.id.tvTitleTestsPac)
+
+        // Obtener los títulos de los tests desde Firestore
+        bucarTitulosTestBD()
+
 
         return view
+    }
+
+    private fun bucarTitulosTestBD() {
+        val db = FirebaseFirestore.getInstance()
+        db.collection("Tests")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    val title = document.getString("title")
+                    if (title != null) {
+                        testTitles.add(title)
+                    }
+                }
+                testAdapter.notifyDataSetChanged()
+
+                tvTitleTestsPac.text = "Tests Disponibles = ${testTitles.size}"
+            }
+            .addOnFailureListener { exception ->
+                // Manejar el error
+            }
     }
 
     inner class TestAdapter(private val tests: List<String>) : RecyclerView.Adapter<TestAdapter.TestViewHolder>() {
 
         inner class TestViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             val testName: TextView = itemView.findViewById(R.id.tvTestName)
+
+            init {
+                itemView.setOnClickListener {
+                    val position = adapterPosition
+                    if (position != RecyclerView.NO_POSITION) {
+                        val selectedTestTitle = tests[position]
+                        val fragment = DoTestFragmentPac.newInstance(selectedTestTitle)
+                        requireActivity().supportFragmentManager.beginTransaction()
+                            .replace(R.id.fragment_container, fragment)
+                            .addToBackStack(null)
+                            .commit()
+                    }
+                }
+            }
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TestViewHolder {
-            val view =
-                LayoutInflater.from(parent.context).inflate(R.layout.item_test, parent, false)
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_test, parent, false)
             return TestViewHolder(view)
         }
 

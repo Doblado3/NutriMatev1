@@ -31,9 +31,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
         <activity
             android:name=".administrador.MainAdministrador"
             android:exported="false" />
+
+        <activity
+            android:name=".administrador.AddTestsFragmentAdm"
+            android:exported="false" />
+
+        <activity
+            android:name=".medico.MainMedico"
+            android:exported="false" />
+
+
     </application>
 
 </manifest>
