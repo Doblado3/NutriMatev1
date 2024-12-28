@@ -22,6 +22,10 @@
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
+
+        <activity
             android:name=".IntroActivity"
             android:exported="true">
             <intent-filter>
@@ -30,13 +34,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+
         <activity
-            android:name=".paciente.TestsActivity"
+            android:name=".administrador.MainAdministrador"
             android:exported="false" />
-        <activity android:name=".medico.MainMedico" />
+
         <activity
-            android:name=".LoginActivity"
+            android:name=".administrador.AddTestsFragmentAdm"
             android:exported="false" />
+
+        <activity
+            android:name=".medico.MainMedico"
+            android:exported="false" />
+
+
     </application>
 
 </manifest>
