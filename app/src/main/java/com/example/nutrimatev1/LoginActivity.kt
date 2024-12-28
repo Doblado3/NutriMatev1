@@ -41,7 +41,7 @@ class LoginActivity : AppCompatActivity() {
 
         btnLogin = findViewById(R.id.AUbtnLogin)
 
-        auth =Firebase.auth
+        auth = Firebase.auth
 
 
         //Funciones para ejecutar en el main
