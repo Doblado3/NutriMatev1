@@ -3,6 +3,7 @@ package com.example.nutrimatev1.medico
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -31,13 +32,21 @@ class MainMedico : AppCompatActivity(), NavigationView.OnNavigationItemSelectedL
 
         drawerLayout = findViewById(R.id.drawer_layout_medico)
 
+
         //Aunque técnicamente ya no usemos un toolbar, para abrir y cerrar
         //el NavigationDrawer se requiere implementarlo
         val toolbar = findViewById<Toolbar>(R.id.toolbar_medico)
         setSupportActionBar(toolbar)
+        supportActionBar?.title = ""
 
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
+
+        val headerView = navigationView.getHeaderView(0)
+        val userEmail = Firebase.auth.currentUser?.email
+        val textEmail = headerView.findViewById<TextView>(R.id.textMedEmailNav)
+
+        textEmail.text = userEmail
 
         val toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar,
             R.string.open_nav, R.string.close_nav)

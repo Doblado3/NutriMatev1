@@ -10,7 +10,7 @@
         android:id="@+id/imageView3"
         android:layout_width="63dp"
         android:layout_height="63dp"
-        android:background="@color/grey"
+        android:background="@color/secondaryVariant"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

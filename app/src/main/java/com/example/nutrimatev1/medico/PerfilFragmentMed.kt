@@ -45,7 +45,6 @@ class PerfilFragmentMed : Fragment() {
         /*Lo que antes era InfoMedico(Activity), ahora pasa a ser PerfilFragmentMed
         * el código es prácticamente el mismo*/
 
-        // Initialize the views
         telefono = view.findViewById(R.id.editTextPhoneMed)
         textoSexo = view.findViewById(R.id.textSexMed)
         nombre = view.findViewById(R.id.editTextNombreMed)
@@ -54,7 +53,7 @@ class PerfilFragmentMed : Fragment() {
         radioGroupMed = view.findViewById(R.id.radioGroupMed)
         emailMed = view.findViewById(R.id.editTextEmailMed)
 
-        // Set email as the current user's email and make it uneditable
+        // El email lo mostramos pero no dejamos que lo editen
         val user = Firebase.auth.currentUser
         user?.let {
             emailMed.setText(user.email)
@@ -157,8 +156,8 @@ class PerfilFragmentMed : Fragment() {
                         }
                     }
                     .addOnFailureListener { e ->
-                        Log.e("ERROR", "Error al obtener los datos del paciente", e)
-                        Alert.showAlert(requireContext(),"Error al obtener los datos del paciente")
+                        Log.e("ERROR", "Error al obtener los datos del médico", e)
+                        Alert.showAlert(requireContext(),"Error al obtener los datos del médico")
                     }
             } else {
                 Log.e("ERROR", "Email del usuario es nulo o vacío")

@@ -1,14 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_pac"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".paciente.PerfilFragmentPac">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/botonActualizarPac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/primary_background"
+        android:onClick="onClickUpdate"
+        android:text="@string/actualizaBoton"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroupPac" />
+
+    <EditText
+        android:id="@+id/editTextEmailPac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:ems="10"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toTopOf="@+id/editTextNombrePac"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextNombrePac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/textoNombre"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/editTextApellidosPac"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextEmailPac" />
+
+    <EditText
+        android:id="@+id/editTextApellidosPac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/textoApellidos"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@+id/editTextDatePac"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNombrePac" />
+
+    <!-- OJO! que aquí ya no usamos onClick por la naturaleza de los Fragments -->
+    <EditText
+        android:id="@+id/editTextDatePac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+
+        android:hint="@string/textoFechaNacMed"
+        android:inputType="date"
+        app:layout_constraintBottom_toTopOf="@+id/editTextPhonePac"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextApellidosPac" />
+
+    <!-- OJO! que aquí ya no usamos onClick por la naturaleza de los Fragments -->
+    <EditText
+        android:id="@+id/editTextPhonePac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/textoNumeroMovil"
+        android:inputType="phone"
+        app:layout_constraintBottom_toTopOf="@+id/textSexPac"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextDatePac" />
+
+    <RadioGroup
+        android:id="@+id/radioGroupPac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="27dp"
+        app:layout_constraintBottom_toTopOf="@+id/botonActualizarPac"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textSexPac">
+
+        <!-- OJO! que aquí ya no usamos onClick por la naturaleza de los Fragments -->
+
+        <RadioButton
+            android:id="@+id/radioHombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/textoRadioHombre" />
+
+        <RadioButton
+            android:id="@+id/radioMujer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/textoMujer"
+            />
+
+        <RadioButton
+            android:id="@+id/radioNC"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/textoNSexo"
+            />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textSexPac"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:text="@string/textoSexo"
+        app:layout_constraintBottom_toTopOf="@+id/radioGroupPac"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextPhonePac" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

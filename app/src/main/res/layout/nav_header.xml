@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="176dp"
-    android:background="@color/primary"
+    android:background="@color/primaryVariant"
     android:gravity="bottom"
     android:padding="16dp"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
@@ -16,19 +16,12 @@
         android:src="@drawable/icono_sin_fondo" />
 
     <TextView
-        android:id="@+id/textMedNombreNav"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hola: Nombre"
-        android:textColor="@color/black"
-        android:textStyle="bold" />
-
-    <TextView
         android:id="@+id/textMedEmailNav"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Email"
         android:textColor="@color/black"
+        android:textStyle="bold"
         android:textSize="14sp"
         android:layout_marginBottom="16dp"/>
 
