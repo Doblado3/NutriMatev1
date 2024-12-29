@@ -44,13 +44,13 @@
                 app:tint="@color/black" />
 
             <TextView
-                android:id="@+id/HPtxtTests"
+                android:id="@+id/HAtxtTests"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/tests"
+                android:text="@string/nuevoTest"
                 android:textColor="@color/black"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
 
         </LinearLayout>
 
@@ -74,13 +74,13 @@
                 app:tint="@color/black" />
 
             <TextView
-                android:id="@+id/HPtxtInfo"
+                android:id="@+id/HAtxtAsigMed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/info"
+                android:text="Asignar médico"
                 android:textColor="@color/black"
-                android:textSize="24sp" />
+                android:textSize="20sp" />
         </LinearLayout>
 
 

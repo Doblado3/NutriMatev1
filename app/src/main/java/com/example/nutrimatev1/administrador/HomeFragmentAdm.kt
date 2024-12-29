@@ -24,13 +24,13 @@ class HomeFragmentAdm : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.findViewById<View>(R.id.LLAddTest).setOnClickListener { onClickHomeAdministrativos(it) }
-        view.findViewById<View>(R.id.LLAsigMed).setOnClickListener { onClickHomeAdministrativos(it) }
+        view.findViewById<View>(R.id.LLAddTest).setOnClickListener { onClickHomeAdministradores(it) }
+        view.findViewById<View>(R.id.LLAsigMed).setOnClickListener { onClickHomeAdministradores(it) }
 
 
     }
 
-    private fun onClickHomeAdministrativos(v: View?) {
+    private fun onClickHomeAdministradores(v: View?) {
         when (v?.id) {
             R.id.LLAddTest -> {
                 val fragment = AddTestsFragmentAdm()

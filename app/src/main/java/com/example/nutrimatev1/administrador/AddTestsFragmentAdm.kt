@@ -1,5 +1,6 @@
 package com.example.nutrimatev1.administrador
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import com.example.nutrimatev1.R
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -64,10 +66,12 @@ class AddTestsFragmentAdm : Fragment() {
         val db = FirebaseFirestore.getInstance()
         db.collection("Tests").add(test)
             .addOnSuccessListener {
-                // Test añadido correctamente
+                Toast.makeText(requireContext(), "Test creado con éxito", Toast.LENGTH_SHORT).show()
+                //Volviendo al fragment anterior
+                requireActivity().supportFragmentManager.popBackStack()
             }
             .addOnFailureListener {
-                // Error al añadir el test
+                Toast.makeText(requireContext(), "Error al crear el test", Toast.LENGTH_SHORT).show()
             }
     }
 }

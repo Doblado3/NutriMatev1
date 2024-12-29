@@ -98,11 +98,11 @@ class LoginActivity : AppCompatActivity() {
                     // Si el email está en "Medicos", redirige a MainMedico
                     startActivity(Intent(this, MainMedico::class.java))
                 } else {
-                    // Verificar en la colección "Administrativos" usando el email como ID
-                    col.collection("Administrativos").document(email).get()
+                    // Verificar en la colección "Administradores" usando el email como ID
+                    col.collection("Administradores").document(email).get()
                         .addOnSuccessListener { adminDoc ->
                             if (adminDoc.exists()) {
-                                // Si el email está en "Administrativos", redirige a MainAdministrador
+                                // Si el email está en "Administradores", redirige a MainAdministrador
                                 startActivity(Intent(this, MainAdministrador::class.java))
                             } else {
                                 // Verificar en la colección "Pacientes" usando el email como ID
@@ -122,7 +122,7 @@ class LoginActivity : AppCompatActivity() {
                             }
                         }
                         .addOnFailureListener {
-                            Alert.showAlert(this, "Error al comprobar la colección de administrativos")
+                            Alert.showAlert(this, "Error al comprobar la colección de administradores")
                         }
                 }
             }

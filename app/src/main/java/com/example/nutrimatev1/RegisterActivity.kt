@@ -76,7 +76,7 @@ class RegisterActivity : AppCompatActivity() {
         // Determine role based on email
         val role = when {
             doctorEmailRegex.matches(email) -> "Médico"
-            adminEmailRegex.matches(email) -> "Administrativo"
+            adminEmailRegex.matches(email) -> "Administrador"
             else -> "Paciente"
         }
 
@@ -106,7 +106,7 @@ class RegisterActivity : AppCompatActivity() {
 
         val collection = when (role) {
             "Médico" -> "Medicos"
-            "Administrativo" -> "Administrativos"
+            "Administrador" -> "Administradores"
             else -> "Pacientes"
         }
 
@@ -115,7 +115,7 @@ class RegisterActivity : AppCompatActivity() {
                 Log.i("INFO", "Usuario guardado en Firestore")
                 val intent = when (role) {
                     "Médico" -> Intent(this, MainMedico::class.java)
-                    "Administrativo" -> Intent(this, MainAdministrador::class.java)
+                    "Administrador" -> Intent(this, MainAdministrador::class.java)
                     else -> Intent(this, MainPaciente::class.java)
                 }
                 startActivity(intent)
