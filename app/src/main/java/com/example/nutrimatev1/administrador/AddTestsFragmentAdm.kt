@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.Toast
 import com.example.nutrimatev1.R
 import com.google.firebase.firestore.FirebaseFirestore
@@ -24,6 +25,7 @@ class AddTestsFragmentAdm : Fragment() {
     private lateinit var valoresNewTest: EditText
     private lateinit var explicacionNewTest: EditText
     private lateinit var buttonAddNewTest: Button
+    private lateinit var proBarAddTest: ProgressBar
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +41,7 @@ class AddTestsFragmentAdm : Fragment() {
         explicacionNewTest = view.findViewById(R.id.explicacionNewTest)
         buttonAddNewTest = view.findViewById(R.id.buttonAddNewTest)
 
+
         buttonAddNewTest.setOnClickListener {
             addTestToFirestore()
         }
@@ -52,7 +55,15 @@ class AddTestsFragmentAdm : Fragment() {
         val questions = preguntasNewTest.text.toString().split(",").map { it.trim() }
         val options = opcionesNewTest.text.toString().split(",").map { it.trim() }
         val values = valoresNewTest.text.toString().split(",").map { it.trim() }
-        val explanation = explicacionNewTest.text.toString()
+        val explanation = explicacionNewTest.text.toString().trim()
+
+        //Verificar que todos los campos estén completos
+        if (title.isEmpty() || description.isEmpty() || questions.isEmpty() || options.isEmpty() || values.isEmpty() || explanation.isEmpty()) {
+            Toast.makeText(requireContext(), "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+
 
         val test = hashMapOf(
             "title" to title,
