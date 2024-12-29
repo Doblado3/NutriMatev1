@@ -52,7 +52,7 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("com.google.firebase:firebase-firestore")
-
+    implementation("androidx.cardview:cardview:1.0.0")
 
 
 
