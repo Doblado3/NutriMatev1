@@ -56,6 +56,8 @@ class TestsFragmentPac : Fragment() {
         db.collection("Tests")
             .get()
             .addOnSuccessListener { result ->
+                // Limpia la lista antes de agregar los nuevos datos
+                testTitles.clear()
                 for (document in result) {
                     val title = document.getString("title")
                     if (title != null) {

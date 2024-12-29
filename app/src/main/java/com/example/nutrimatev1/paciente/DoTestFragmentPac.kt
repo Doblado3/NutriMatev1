@@ -66,10 +66,11 @@ class DoTestFragmentPac : Fragment() {
                 for (document in result) {
                     val questionsList = document.get("questions") as? List<String> ?: emptyList()
                     val optionsList = document.get("options") as? List<String> ?: emptyList()
+                    val valuesList = document.get("values") as? List<String> ?: emptyList()
 
                     for (question in questionsList) {
                         // Asigna todas las opciones a cada pregunta
-                        questions.add(Question(question, optionsList))
+                        questions.add(Question(question, optionsList, valuesList))
                     }
                 }
                 questionAdapter.notifyDataSetChanged()
@@ -129,11 +130,26 @@ class DoTestFragmentPac : Fragment() {
     private fun saveTestResultsToFirestore() {
         val db = FirebaseFirestore.getInstance()
 
+        // Obtener los valores de las respuestas seleccionadas
+        var totalScore = 0
+        for ((question, selectedOption) in answers) {
+            // Busca la opción seleccionada en las preguntas para obtener su valor
+            val testDocument = questions.find { it.title == question }
+            if (testDocument != null) {
+                val optionIndex = testDocument.options.indexOf(selectedOption)
+                if (optionIndex != -1) {
+                    val value = testDocument.values[optionIndex].toIntOrNull() ?: 0
+                    totalScore += value
+                }
+            }
+        }
+
         // Crear el objeto a guardar
         val testResult = hashMapOf(
             "testTitle" to testTitle,
             "patientId" to "ID_DEL_PACIENTE", // Reemplaza con un identificador único del paciente
             "answers" to answers,
+            "totalScore" to totalScore,
             "timestamp" to System.currentTimeMillis()
         )
 
