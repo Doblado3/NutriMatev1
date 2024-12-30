@@ -17,7 +17,8 @@ import java.util.Calendar
 
 class DetallesPacFragmentMed : Fragment() {
 
-    private lateinit var textoPaciente: TextView
+    private lateinit var textoNombre: TextView
+    private lateinit var textoFecha: TextView
     private lateinit var botonBorrarPaciente: Button
     private var paciente: Paciente? = null
 
@@ -32,17 +33,23 @@ class DetallesPacFragmentMed : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        textoPaciente = view.findViewById(R.id.textDetallesPac)
+        textoNombre = view.findViewById(R.id.textNombreDetPac)
+        textoFecha = view.findViewById(R.id.textFechaDetPac)
         botonBorrarPaciente = view.findViewById(R.id.botonBorrarPac)
 
         // Recuperar el objeto Paciente de los argumentos
-        paciente = arguments?.getSerializable("paciente") as? Paciente
+        arguments?.let { bundle ->
+            val nombre = bundle.getString("nombre")
+            val fechaNacimiento = bundle.getSerializable("fechaNacimiento") as? Calendar
 
-        // Mostrar los detalles del paciente
-        paciente?.let {
-            textoPaciente.text = "${it.nombre}: ${it.fechanac.get(Calendar.DAY_OF_MONTH)}/" +
-                    "${it.fechanac.get(Calendar.MONTH) + 1}/" + // Los meses empiezan desde 0
-                    "${it.fechanac.get(Calendar.YEAR)}"
+            textoNombre.text = nombre
+
+
+
+            fechaNacimiento?.let {
+                val dateFormat = java.text.SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault())
+                textoFecha.text = "Fecha de Nacimiento: ${dateFormat.format(it.time)}"
+            }
         }
 
         // Configurar el botón de borrar
