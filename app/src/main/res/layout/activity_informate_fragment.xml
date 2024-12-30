@@ -256,7 +256,7 @@
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
                             android:layout_marginBottom="10dp"
-                            android:text="Una guía ráìda sobre la aplicación, sus funciones y cómo puede ayudarte con tu médico">
+                            android:text="Una guía rápida sobre la aplicación, sus funciones y cómo puede ayudarte con tu médico">
 
                         </TextView>
 
