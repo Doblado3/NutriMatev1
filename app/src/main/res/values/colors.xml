@@ -6,6 +6,9 @@
 
     <color name="primary">#f5e9dc</color>
     <color name="secondary">#dce8f5</color>
+    <color name="prueba">#ED8600</color>
+    <color name="prueba2">#e8ebfd</color>
+    <color name="prueba3">#0057ee</color>
 
     <color name="primaryVariant">#cc7d28</color>
     <color name="secondaryVariant">#427fc2</color>

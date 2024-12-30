@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
@@ -35,9 +36,17 @@ class MainAdministrador : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         val toolbar = findViewById<Toolbar>(R.id.toolbar_administrador)
         setSupportActionBar(toolbar)
+        supportActionBar?.title = ""
+
 
         val navigationView = findViewById<NavigationView>(R.id.nav_view)
         navigationView.setNavigationItemSelectedListener(this)
+
+        val headerView = navigationView.getHeaderView(0)
+        val userEmail = Firebase.auth.currentUser?.email
+        val textEmail = headerView.findViewById<TextView>(R.id.textMedEmailNav)
+
+        textEmail.text = userEmail
 
         val toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar,
             R.string.open_nav, R.string.close_nav)
@@ -72,7 +81,7 @@ class MainAdministrador : AppCompatActivity(), NavigationView.OnNavigationItemSe
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.nav_home -> replaceFragment(HomeFragmentAdm())
-            R.id.nav_perfil -> replaceFragment(HomeFragmentAdm())
+            R.id.nav_perfil -> replaceFragment(PerfilFragmentAdm())
             R.id.nav_logout -> showLogoutConfirmationDialog()
         }
         drawerLayout.closeDrawer(GravityCompat.START)

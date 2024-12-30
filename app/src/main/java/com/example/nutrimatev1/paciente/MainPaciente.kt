@@ -102,7 +102,7 @@ class MainPaciente : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val builder = AlertDialog.Builder(this, R.style.CustomAlertDialogTheme)
         builder.setTitle("Cerrar Sesión")
             .setMessage("¿Seguro que quieres cerrar sesión?")
-            .setPositiveButton("Yes"){_, _ ->
+            .setPositiveButton("Sí"){_, _ ->
                 Firebase.auth.signOut()
                 val intent = Intent(this, LoginActivity::class.java)
                 startActivity(intent)

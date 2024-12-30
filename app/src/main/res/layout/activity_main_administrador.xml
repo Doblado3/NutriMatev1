@@ -6,6 +6,7 @@
     android:id="@+id/drawer_layout_administrador"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     android:fitsSystemWindows="true"
     tools:openDrawer="start"
     tools:context=".administrador.MainAdministrador">
@@ -20,7 +21,7 @@
             android:layout_height="56dp"
             android:id="@+id/toolbar_administrador"
             android:elevation="4dp"
-            android:background="@color/secondary"
+            android:background="@color/prueba2"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
@@ -38,8 +39,8 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/nav_menu"
-        app:itemIconTint="@color/secondaryVariant"
-        app:itemTextColor="@color/secondaryVariant"/>
+        app:itemIconTint="@color/prueba"
+        app:itemTextColor="@color/prueba"/>
 
 
 

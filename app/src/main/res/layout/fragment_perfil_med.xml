@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".medico.PerfilFragmentMed">
@@ -14,6 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:background="@drawable/primary_background"
+        android:textColor="@color/white"
         android:onClick="onClickUpdate"
         android:text="@string/actualizaBoton"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -29,6 +31,7 @@
         android:ems="10"
         android:hint="@string/email"
         android:inputType="textEmailAddress"
+        android:background="@drawable/editlogintext_background"
         app:layout_constraintBottom_toTopOf="@+id/editTextNombreMed"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,6 +41,7 @@
         android:id="@+id/editTextNombreMed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/editlogintext_background"
         android:ems="10"
         android:hint="@string/textoNombre"
         android:inputType="text"
@@ -50,6 +54,7 @@
         android:id="@+id/editTextApellidosMed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/editlogintext_background"
         android:ems="10"
         android:hint="@string/textoApellidos"
         android:inputType="text"
@@ -64,7 +69,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-
+        android:background="@drawable/editlogintext_background"
         android:hint="@string/textoFechaNacMed"
         android:inputType="date"
         app:layout_constraintBottom_toTopOf="@+id/editTextPhoneMed"
@@ -79,6 +84,7 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/textoNumeroMovil"
+        android:background="@drawable/editlogintext_background"
         android:inputType="phone"
         app:layout_constraintBottom_toTopOf="@+id/textSexMed"
         app:layout_constraintEnd_toEndOf="parent"
@@ -101,12 +107,14 @@
             android:id="@+id/radioHombre"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/editlogintext_background"
             android:text="@string/textoRadioHombre" />
 
         <RadioButton
             android:id="@+id/radioMujer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/editlogintext_background"
             android:text="@string/textoMujer"
             />
 
@@ -114,6 +122,7 @@
             android:id="@+id/radioNC"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/editlogintext_background"
             android:text="@string/textoNSexo"
             />
     </RadioGroup>
@@ -123,6 +132,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
+        android:background="@drawable/editlogintext_background"
         android:text="@string/textoSexo"
         app:layout_constraintBottom_toTopOf="@+id/radioGroupMed"
         app:layout_constraintStart_toStartOf="parent"

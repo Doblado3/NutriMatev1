@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary"
+    android:background="@color/white"
     tools:context=".medico.HomeFragmentMed">
 
     <ScrollView
@@ -34,7 +34,7 @@
                         android:id="@+id/textNombreMedHome"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Bienvenido $Nombre"
+                        android:text="¡Hola, $Nombre!"
                         android:textSize="18sp"
                         android:textStyle="bold"
                         android:textColor="@color/black"/>
@@ -50,11 +50,11 @@
                 android:textSize="16sp"
                 android:drawableEnd="@drawable/baseline_search_24"
                 android:ems="10"
-                android:textStyle="italic"
+                android:textStyle="bold"
                 android:inputType="text"
                 android:hint="Buscar Paciente"
                 android:textColor="@color/black"
-                android:textColorHint="@color/grey"
+                android:textColorHint="@color/prueba2"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="8dp"
                 android:background="@drawable/edt_bg"/>
@@ -81,7 +81,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Filtrar"
-                    android:textColor="@color/primaryVariant"/>
+                    android:textColor="@color/prueba"/>
 
             </LinearLayout>
 

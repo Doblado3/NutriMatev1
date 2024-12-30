@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout_paciente"
-    android:background="@color/primary"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
@@ -21,7 +21,7 @@
             android:layout_height="56dp"
             android:id="@+id/toolbar_paciente"
             android:elevation="4dp"
-            android:background="@color/primaryVariant"
+            android:background="@color/prueba2"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
@@ -39,8 +39,8 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header"
         app:menu="@menu/nav_menu"
-        app:itemIconTint="@color/secondaryVariant"
-        app:itemTextColor="@color/secondaryVariant"/>
+        app:itemIconTint="@color/prueba"
+        app:itemTextColor="@color/prueba"/>
 
 
 

@@ -125,7 +125,7 @@ class RegisterActivity : AppCompatActivity() {
                                     fecha: Timestamp, telefono: String) {
         val user = hashMapOf(
             "email" to email,
-            "name" to name,
+            "nombre" to name,
             "role" to role,
             "sexo" to sexo,
             "apellidos" to apellidos,
