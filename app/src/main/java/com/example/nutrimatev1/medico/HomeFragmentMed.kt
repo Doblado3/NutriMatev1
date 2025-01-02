@@ -80,10 +80,11 @@ class HomeFragmentMed : Fragment() {
                 for (d in docs){
 
                     var pac_nom = d.get("Nombre").toString()
+                    var pac_em = d.get("email").toString()
                     var fechaNac = Calendar.getInstance()
                     fechaNac.time = d.getTimestamp("fecha de nacimiento")?.toDate()
 
-                    pacientes.add(Paciente(d.id,pac_nom, fechaNac))
+                    pacientes.add(Paciente(d.id,pac_nom, pac_em , fechaNac))
 
 
 
@@ -112,6 +113,7 @@ class HomeFragmentMed : Fragment() {
         fragment.arguments = Bundle().apply {
             putString("id", paciente.id)
             putString("nombre", paciente.nombre)
+            putString("email", paciente.email)
             putSerializable("fechaNacimiento", paciente.fechanac)
         }
 
@@ -128,11 +130,11 @@ class HomeFragmentMed : Fragment() {
 
                 inner class ViewHolder(view: View): RecyclerView.ViewHolder(view){
                     val textView_nom: TextView
-                    val textView_fch: TextView
+                    val textView_em: TextView
 
                     init{
                         textView_nom = view.findViewById(R.id.textView_nombrePac)
-                        textView_fch = view.findViewById(R.id.textView_fechanacPac)
+                        textView_em = view.findViewById(R.id.textView_fechanacPac)
                     }
                 }
 
@@ -149,9 +151,9 @@ class HomeFragmentMed : Fragment() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             holder.textView_nom.text = dataSet[position].nombre
-            val dateFormat = java.text.SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault())
-            val formattedDate = dateFormat.format(dataSet[position].fechanac.time)
-            holder.textView_fch.text = formattedDate
+            //val dateFormat = java.text.SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault())
+            //val formattedDate = dateFormat.format(dataSet[position].fechanac.time)
+            holder.textView_em.text = dataSet[position].email
             holder.itemView.setOnClickListener{clickListener(dataSet[position])}
 
         }
