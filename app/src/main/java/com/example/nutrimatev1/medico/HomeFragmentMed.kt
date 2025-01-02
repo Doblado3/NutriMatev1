@@ -80,10 +80,11 @@ class HomeFragmentMed : Fragment() {
                 for (d in docs){
 
                     var pac_nom = d.get("Nombre").toString()
+                    var pac_ap = d.get("Apellidos").toString()
                     var fechaNac = Calendar.getInstance()
                     fechaNac.time = d.getTimestamp("fecha de nacimiento")?.toDate()
 
-                    pacientes.add(Paciente(d.id,pac_nom, fechaNac))
+                    pacientes.add(Paciente(d.id,pac_nom, pac_ap, fechaNac))
 
 
 

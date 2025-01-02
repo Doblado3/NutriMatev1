@@ -15,90 +15,123 @@ import com.example.nutrimatev1.modelo.Medico
 import com.example.nutrimatev1.modelo.Paciente
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Calendar
+import java.util.Date
 
 
 class AsigMedFragmentAdm : Fragment() {
+
+
+    private lateinit var medicosSpinner: Spinner
+    private lateinit var pacientesSpinner: Spinner
+    private lateinit var asignarButton: Button
+
+    private lateinit var medicosMap: Map<String, String>
+    private lateinit var pacientesMap: Map<String, String>
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_asig_med_adm, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val medicosSpinner: Spinner = view.findViewById(R.id.medicos_spinner)
-        val pacientesSpinner: Spinner = view.findViewById(R.id.pacientes_spinner)
-        val asignarButton: Button = view.findViewById(R.id.asignar_button)
+        medicosSpinner = view.findViewById(R.id.medicos_spinner)
+        pacientesSpinner = view.findViewById(R.id.pacientes_spinner)
+        asignarButton = view.findViewById(R.id.asignar_button)
 
-        obtenerMedicos { medicos ->
-            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, medicos.map { it.nombre })
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            medicosSpinner.adapter = adapter
-        }
+        obtenerMedicos {
+            obtenerPacientes {
+                asignarButton.setOnClickListener {
+                    val medicoSeleccionado = medicosSpinner.selectedItem as? String
+                    val pacienteSeleccionado = pacientesSpinner.selectedItem as? String
 
-        obtenerPacientes { pacientes ->
-            val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, pacientes.map { it.nombre })
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            pacientesSpinner.adapter = adapter
-        }
+                    val emailMed = medicosMap[medicoSeleccionado]
+                    val emailPac = pacientesMap[pacienteSeleccionado]
 
-        asignarButton.setOnClickListener {
-            val medicoSeleccionado = medicosSpinner.selectedItem as? String
-            val pacienteSeleccionado = pacientesSpinner.selectedItem as? String
-            if (medicoSeleccionado != null && pacienteSeleccionado != null) {
-                asignarMedicoAPaciente(medicoSeleccionado, pacienteSeleccionado)
-            } else {
-                Toast.makeText(requireContext(), "Selecciona un médico y un paciente", Toast.LENGTH_SHORT).show()
+                    if (emailMed != null && emailPac != null) {
+                        asignarMedicoAPaciente(emailMed, emailPac)
+                    } else {
+                        Toast.makeText(requireContext(), "Error: Selección inválida.", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
     }
 
-    private fun obtenerMedicos(callback: (List<Medico>) -> Unit) {
+    private fun obtenerMedicos(callback: () -> Unit) {
         FirebaseFirestore.getInstance().collection("Medicos")
             .get()
             .addOnSuccessListener { result ->
-                val medicos = result.map { document ->
-                    Medico(document.id, document.getString("nombre") ?: "")
+                val medicos = result.associate { document ->
+                    val nombreCompleto = "${document.getString("nombre") ?: ""} ${document.getString("apellidos") ?: ""}"
+                    val email = document.id
+                    nombreCompleto to email
                 }
-                callback(medicos)
+                medicosMap = medicos
+                val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, medicos.keys.toList())
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                medicosSpinner.adapter = adapter
+                callback()
             }
             .addOnFailureListener { exception ->
                 Log.e("Firestore", "Error al obtener médicos", exception)
+                Toast.makeText(requireContext(), "Error al cargar médicos.", Toast.LENGTH_SHORT).show()
             }
     }
 
-    private fun obtenerPacientes(callback: (List<Paciente>) -> Unit) {
+    private fun obtenerPacientes(callback: () -> Unit) {
         FirebaseFirestore.getInstance().collection("Pacientes")
             .get()
             .addOnSuccessListener { result ->
-                val pacientes = result.map { document ->
-                    val fechaNacimiento = document.getDate("fechaNacimiento")
-                    val calendar = Calendar.getInstance()
-                    if (fechaNacimiento != null) {
-                        calendar.time = fechaNacimiento
-                    }
-                    Paciente(document.id, document.getString("nombre") ?: "", calendar)
+                val pacientes = result.associate { document ->
+                    val nombreCompleto = "${document.getString("nombre") ?: ""} ${document.getString("apellidos") ?: ""}"
+                    val email = document.id
+                    nombreCompleto to email
                 }
-                callback(pacientes)
+                pacientesMap = pacientes
+                val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, pacientes.keys.toList())
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                pacientesSpinner.adapter = adapter
+                callback()
             }
             .addOnFailureListener { exception ->
                 Log.e("Firestore", "Error al obtener pacientes", exception)
+                Toast.makeText(requireContext(), "Error al cargar pacientes.", Toast.LENGTH_SHORT).show()
             }
     }
 
-    private fun asignarMedicoAPaciente(medico: String, email: String) {
-        val pacienteRef = FirebaseFirestore.getInstance().collection("Pacientes").document(email)
-        val medicoData = hashMapOf("nombre" to medico)
+    private fun asignarMedicoAPaciente(emailMed: String, emailPac: String) {
+        // Asigna el médico al paciente en la subcolección "medicos" del paciente
+        val pacienteRef = FirebaseFirestore.getInstance()
+            .collection("Pacientes")
+            .document(emailPac)
 
-        pacienteRef.collection("medicos").add(medicoData)
+        val medicoData = hashMapOf("email" to emailMed)
+
+        pacienteRef.collection("medicos").document(emailMed)
+            .set(medicoData)
             .addOnSuccessListener {
-                Toast.makeText(requireContext(), "Médico asignado correctamente", Toast.LENGTH_SHORT).show()
+                // Luego, asigna el paciente al médico en la subcolección "pacientes" del médico
+                val medicoRef = FirebaseFirestore.getInstance()
+                    .collection("Medicos")
+                    .document(emailMed)
+
+                val pacienteData = hashMapOf("email" to emailPac)
+
+                medicoRef.collection("pacientes").document(emailPac)
+                    .set(pacienteData)
+                    .addOnSuccessListener {
+                        Toast.makeText(requireContext(), "Médico asignado correctamente.", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener { exception ->
+                        Toast.makeText(requireContext(), "Error al asignar paciente al médico: ${exception.message}", Toast.LENGTH_SHORT).show()
+                    }
             }
             .addOnFailureListener { exception ->
-                Toast.makeText(requireContext(), "Error al asignar médico: ${exception.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Error al asignar médico al paciente: ${exception.message}", Toast.LENGTH_SHORT).show()
             }
     }
 }
