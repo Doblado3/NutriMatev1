@@ -1,5 +1,7 @@
 package com.example.nutrimatev1.medico
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,6 +15,7 @@ import androidx.appcompat.widget.AppCompatButton
 import com.example.nutrimatev1.R
 import com.example.nutrimatev1.modelo.Alert
 import com.example.nutrimatev1.modelo.Paciente
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -24,6 +27,8 @@ class DetallesPacFragmentMed : Fragment() {
     private lateinit var textoFecha: TextView
     private lateinit var botonBorrarPaciente: AppCompatButton
     private lateinit var paciente: Paciente
+
+    private lateinit var botonCitas: AppCompatButton
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,6 +44,33 @@ class DetallesPacFragmentMed : Fragment() {
         textoNombre = view.findViewById(R.id.textNombreDetPac)
         textoFecha = view.findViewById(R.id.textFechaDetPac)
         botonBorrarPaciente = view.findViewById(R.id.botonBorrarPac)
+
+        botonCitas = view.findViewById(R.id.botonAsignarCitaPac)
+
+        val calendarBox = Calendar.getInstance()
+        val dateBox = DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
+            TimePickerDialog(
+                requireContext(),
+                { _, hourOfDay, minute ->
+                    // Establece la hora seleccionada en el calendario
+                    calendarBox.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                    calendarBox.set(Calendar.MINUTE, minute)
+
+                    // Llama a la función para guardar la cita con fecha y hora
+                    guardarCita(year, month, day, hourOfDay, minute)
+                },
+                calendarBox.get(Calendar.HOUR_OF_DAY),
+                calendarBox.get(Calendar.MINUTE),
+                true
+            ).show()
+        }
+
+        botonCitas.setOnClickListener{
+            DatePickerDialog(requireContext(), dateBox, calendarBox.get(Calendar.YEAR),
+                calendarBox.get(Calendar.MONTH), calendarBox.get(Calendar.DAY_OF_MONTH)).show()
+        }
+
+
 
         // Recuperar el objeto Paciente de los argumentos
         arguments?.let { bundle ->
@@ -67,6 +99,33 @@ class DetallesPacFragmentMed : Fragment() {
             eliminarPaciente()
         }
     }
+
+    private fun guardarCita(year: Int, month: Int, day: Int, hour: Int, minute: Int) {
+        val emailMedico = Firebase.auth.currentUser!!.email!!
+        val fecha = Calendar.getInstance()
+        fecha.set(year, month, day, hour, minute)
+
+        Firebase.firestore.collection("Medicos")
+            .document(emailMedico)
+            .collection("pacientes")
+            .document(paciente.id)
+            .collection("citas")
+            .add(mapOf(
+                "emailMedico" to emailMedico,
+                "fechahora" to Timestamp(fecha.time)
+            ))
+            .addOnSuccessListener {
+                Alert.showAlert(requireContext(), "Cita guardada de forma correcta")
+
+            }
+            .addOnFailureListener{
+
+                Alert.showAlert(requireContext(), "Ha surgido un error al asignar la cita")
+
+            }
+
+    }
+
 
     private fun eliminarPaciente() {
             Firebase.firestore.collection("Medicos")

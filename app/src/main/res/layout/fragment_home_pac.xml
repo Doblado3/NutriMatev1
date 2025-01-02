@@ -4,6 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".paciente.HomeFragmentPac">
@@ -12,17 +13,32 @@
     <!-- Cuadrícula con botones -->
 
 
+    <ImageView
+        android:id="@+id/imageElige"
+        android:layout_width="300dp"
+        android:layout_height="400dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/revisa_forma"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/gridLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <GridLayout
+        android:id="@+id/gridLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_marginBottom="86dp"
         android:columnCount="2"
         android:padding="8dp"
         android:rowCount="3"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <LinearLayout
             android:id="@+id/LLTests"
@@ -30,9 +46,9 @@
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_margin="8dp"
+            android:background="@drawable/button_background"
             android:gravity="center"
             android:orientation="vertical"
-            android:background="@drawable/button_background"
             android:padding="8dp">
 
             <ImageView
@@ -60,9 +76,9 @@
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_margin="8dp"
+            android:background="@drawable/button_background"
             android:gravity="center"
             android:orientation="vertical"
-            android:background="@drawable/button_background"
             android:padding="8dp">
 
             <ImageView
@@ -89,9 +105,9 @@
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_margin="8dp"
+            android:background="@drawable/button_background"
             android:gravity="center"
             android:orientation="vertical"
-            android:background="@drawable/button_background"
             android:padding="8dp">
 
             <ImageView
@@ -111,15 +127,16 @@
                 android:textColor="@color/black"
                 android:textSize="24sp" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/LLDiviertete"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_margin="8dp"
+            android:background="@drawable/button_background"
             android:gravity="center"
             android:orientation="vertical"
-            android:background="@drawable/button_background"
             android:padding="8dp">
 
             <ImageView
@@ -139,7 +156,6 @@
                 android:textColor="@color/black"
                 android:textSize="24sp" />
         </LinearLayout>
-
 
 
     </GridLayout>

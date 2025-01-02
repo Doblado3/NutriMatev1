@@ -4,7 +4,7 @@
     <!-- Estado cuando el botón es presionado -->
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <solid android:color="@color/primary" /> <!-- Primary de fondo al presionar -->
+            <solid android:color="@color/prueba2" /> <!-- Primary de fondo al presionar -->
             <corners android:radius="16dp" /> <!-- Bordes redondeados -->
         </shape>
     </item>
@@ -15,7 +15,7 @@
             <solid android:color="#FFFFFF" /> <!-- Fondo blanco normal -->
             <stroke
                 android:width="2dp"
-                android:color="@color/primary" /> <!-- Borde naranja -->
+                android:color="@color/prueba" /> <!-- Borde naranja -->
             <corners android:radius="16dp" /> <!-- Bordes redondeados -->
         </shape>
     </item>
