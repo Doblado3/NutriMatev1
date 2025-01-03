@@ -12,6 +12,7 @@ import com.example.nutrimatev1.R
 import com.example.nutrimatev1.modelo.Alert
 import com.example.nutrimatev1.modelo.Paciente
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.Calendar
@@ -71,40 +72,52 @@ class HomeFragmentMed : Fragment() {
     }
 
     private fun muestraPacientes(): Unit {
-        var pacientes = mutableListOf<Paciente>()
+        val pacientes = mutableListOf<Paciente>()
+        val currentUserEmail = Firebase.auth.currentUser?.email
+
+        if (currentUserEmail.isNullOrEmpty()) {
+            Alert.showAlert(requireContext(), "Usuario no autenticado.")
+            return
+        }
+
         Firebase.firestore.collection("Medicos")
-            .document(Firebase.auth.currentUser!!.email.toString())
+            .document(currentUserEmail)
             .collection("pacientes")
             .get()
             .addOnSuccessListener { docs ->
-                for (d in docs){
+                val pacientesEmails = docs.mapNotNull { it.getString("email") } // Filtra nulos
 
-                    var pac_nom = d.get("Nombre").toString()
-                    var pac_ap = d.get("Apellidos").toString()
-                    var fechaNac = Calendar.getInstance()
-                    fechaNac.time = d.getTimestamp("fecha de nacimiento")?.toDate()
-
-                    pacientes.add(Paciente(d.id,pac_nom, pac_ap, fechaNac))
-
-
-
+                if (pacientesEmails.isEmpty()) {
+                    numPacientes.text = "No hay pacientes asignados."
+                    return@addOnSuccessListener
                 }
 
-                val adaptadorPacientes = AdaptadorPacientes(pacientes){it -> onClickPaciente(it)}
+                // Consultar la colección Pacientes para obtener más información
+                Firebase.firestore.collection("Pacientes")
+                    .whereIn(FieldPath.documentId(), pacientesEmails) // Filtrar por los correos
+                    .get()
+                    .addOnSuccessListener { pacientesDocs ->
+                        for (d in pacientesDocs) {
+                            val pacNom = d.getString("nombre") ?: "Desconocido"
+                            val pacAp = d.getString("apellidos") ?: "Desconocido"
 
-                listaPacientes.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-                listaPacientes.adapter = adaptadorPacientes
 
+                            pacientes.add(Paciente(d.id, pacNom, pacAp))
+                        }
 
-
-
-                numPacientes.text = "Hay " + adaptadorPacientes.itemCount + " pacientes"
+                        // Configurar el adaptador
+                        val adaptadorPacientes = AdaptadorPacientes(pacientes) { it -> onClickPaciente(it) }
+                        listaPacientes.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                        listaPacientes.adapter = adaptadorPacientes
+                        numPacientes.text = "Hay ${adaptadorPacientes.itemCount} pacientes"
+                    }
+                    .addOnFailureListener {
+                        Alert.showAlert(requireContext(), "Error al cargar información de pacientes.")
+                    }
             }
-            .addOnFailureListener{
-
-                Alert.showAlert(requireContext(), "Hay un error")
+            .addOnFailureListener {
+                Alert.showAlert(requireContext(), "Error al cargar los correos de los pacientes.")
             }
-
     }
 
     fun onClickPaciente(paciente: Paciente){
@@ -113,7 +126,7 @@ class HomeFragmentMed : Fragment() {
         fragment.arguments = Bundle().apply {
             putString("id", paciente.id)
             putString("nombre", paciente.nombre)
-            putSerializable("fechaNacimiento", paciente.fechanac)
+            putString("apellidos", paciente.apellidos)
         }
 
         parentFragmentManager.beginTransaction()
@@ -129,11 +142,11 @@ class HomeFragmentMed : Fragment() {
 
                 inner class ViewHolder(view: View): RecyclerView.ViewHolder(view){
                     val textView_nom: TextView
-                    val textView_fch: TextView
+                    val textView_ap: TextView
 
                     init{
                         textView_nom = view.findViewById(R.id.textView_nombrePac)
-                        textView_fch = view.findViewById(R.id.textView_fechanacPac)
+                        textView_ap = view.findViewById(R.id.textView_apellidosPac)
                     }
                 }
 
@@ -150,9 +163,9 @@ class HomeFragmentMed : Fragment() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             holder.textView_nom.text = dataSet[position].nombre
-            val dateFormat = java.text.SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault())
-            val formattedDate = dateFormat.format(dataSet[position].fechanac.time)
-            holder.textView_fch.text = formattedDate
+            holder.textView_ap.text = dataSet[position].apellidos
+
+
             holder.itemView.setOnClickListener{clickListener(dataSet[position])}
 
         }
