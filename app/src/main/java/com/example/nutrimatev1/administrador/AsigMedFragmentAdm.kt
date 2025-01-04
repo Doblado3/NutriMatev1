@@ -52,7 +52,7 @@ class AsigMedFragmentAdm : Fragment() {
                     val emailPac = pacientesMap[pacienteSeleccionado]
 
                     if (emailMed != null && emailPac != null) {
-                        asignarMedicoAPaciente(emailMed, emailPac)
+                        evitaDuplicados(emailMed, emailPac)
                     } else {
                         Toast.makeText(requireContext(), "Error: Selección inválida.", Toast.LENGTH_SHORT).show()
                     }
@@ -68,6 +68,8 @@ class AsigMedFragmentAdm : Fragment() {
                 val medicos = result.associate { document ->
                     val nombreCompleto = "${document.getString("nombre") ?: ""} ${document.getString("apellidos") ?: ""}"
                     val email = document.id
+
+                    //Asigna el nombre al email para mostrarlo en el Spinner
                     nombreCompleto to email
                 }
                 medicosMap = medicos
@@ -103,35 +105,86 @@ class AsigMedFragmentAdm : Fragment() {
             }
     }
 
-    private fun asignarMedicoAPaciente(emailMed: String, emailPac: String) {
-        // Asigna el médico al paciente en la subcolección "medicos" del paciente
-        val pacienteRef = FirebaseFirestore.getInstance()
-            .collection("Pacientes")
+    private fun evitaDuplicados(emailMed: String, emailPac: String){
+        val medicosRef = FirebaseFirestore.getInstance()
+            .collection("Medicos")
+            .document(emailMed)
+            .collection("pacientes")
             .document(emailPac)
 
-        val medicoData = hashMapOf("email" to emailMed)
+        medicosRef.get().addOnSuccessListener { paciente ->
+            if (paciente.exists()){
+                Toast.makeText(requireContext(), "Paciente ya asignado", Toast.LENGTH_SHORT).show()
+            } else {
 
-        pacienteRef.collection("medicos").document(emailMed)
-            .set(medicoData)
-            .addOnSuccessListener {
-                // Luego, asigna el paciente al médico en la subcolección "pacientes" del médico
-                val medicoRef = FirebaseFirestore.getInstance()
-                    .collection("Medicos")
-                    .document(emailMed)
+                asignarMedicoAPaciente(emailMed, emailPac)
 
-                val pacienteData = hashMapOf("email" to emailPac)
-
-                medicoRef.collection("pacientes").document(emailPac)
-                    .set(pacienteData)
-                    .addOnSuccessListener {
-                        Toast.makeText(requireContext(), "Médico asignado correctamente.", Toast.LENGTH_SHORT).show()
-                    }
-                    .addOnFailureListener { exception ->
-                        Toast.makeText(requireContext(), "Error al asignar paciente al médico: ${exception.message}", Toast.LENGTH_SHORT).show()
-                    }
             }
-            .addOnFailureListener { exception ->
-                Toast.makeText(requireContext(), "Error al asignar médico al paciente: ${exception.message}", Toast.LENGTH_SHORT).show()
-            }
+        }
+
+    }
+
+    private fun asignarMedicoAPaciente(emailMed: String, emailPac: String) {
+        //Repetimos el mismo paso de funciones anteriores para obtener otros campos
+        FirebaseFirestore.getInstance().collection("Medicos")
+            .document(emailMed)
+            .get()
+            .addOnSuccessListener { documentMed ->
+                val nombreMed = documentMed.getString("nombre")
+                val apellidosMed = documentMed.getString("apellidos")
+                val sexoMed = documentMed.getString("sexo")
+                val telefonoMed = documentMed.getString("telefono")
+
+                FirebaseFirestore.getInstance().collection("Pacientes")
+                    .document(emailPac)
+                    .get()
+                    .addOnSuccessListener { documentPac ->
+                        val nombrePac = documentPac.getString("nombre")
+                        val apellidosPac = documentPac.getString("apellidos")
+                        val sexoPac = documentPac.getString("sexo")
+                        val telefonoPac = documentPac.getString("telefono")
+
+                        val medicoData = hashMapOf(
+                            "nombre" to nombreMed,
+                            "apellidos" to apellidosMed,
+                            "sexo" to sexoMed,
+                            "telefono" to telefonoMed
+                            )
+
+                        // Asigna el médico al paciente en la subcolección "medicos" del paciente
+                        val pacienteRef = FirebaseFirestore.getInstance()
+                            .collection("Pacientes")
+                            .document(emailPac)
+
+                        pacienteRef.collection("medicos").document(emailMed)
+                            .set(medicoData)
+                            .addOnSuccessListener {
+
+                                val pacienteData = hashMapOf(
+                                    "nombre" to nombrePac,
+                                    "apellidos" to apellidosPac,
+                                    "sexo" to sexoPac,
+                                    "telefono" to telefonoPac
+                                )
+
+                                // Luego, asigna el paciente al médico en la subcolección "pacientes" del médico
+                                val medicoRef = FirebaseFirestore.getInstance()
+                                    .collection("Medicos")
+                                    .document(emailMed)
+
+                                medicoRef.collection("pacientes").document(emailPac)
+                                    .set(pacienteData)
+                                    .addOnSuccessListener {
+
+                                        Toast.makeText(requireContext(), "Asignación satisfactoria.", Toast.LENGTH_SHORT).show()
+                                    }
+                                    .addOnFailureListener { exception ->
+                                        Toast.makeText(requireContext(), "Error al realizar la asignación: ${exception.message}", Toast.LENGTH_SHORT).show()
+                                    }
+
+                            }
+                    }
+
+                }
     }
 }
