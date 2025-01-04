@@ -14,8 +14,10 @@ import com.example.nutrimatev1.R
 import com.example.nutrimatev1.modelo.Medico
 import com.example.nutrimatev1.modelo.Paciente
 import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
+import java.util.Locale
 
 
 class AsigMedFragmentAdm : Fragment() {
@@ -52,6 +54,8 @@ class AsigMedFragmentAdm : Fragment() {
                     val emailPac = pacientesMap[pacienteSeleccionado]
 
                     if (emailMed != null && emailPac != null) {
+                        //Función que se encarga de asignar los pacientes considerando además
+                        //asignaciones ya realizadas
                         evitaDuplicados(emailMed, emailPac)
                     } else {
                         Toast.makeText(requireContext(), "Error: Selección inválida.", Toast.LENGTH_SHORT).show()
@@ -134,6 +138,8 @@ class AsigMedFragmentAdm : Fragment() {
                 val apellidosMed = documentMed.getString("apellidos")
                 val sexoMed = documentMed.getString("sexo")
                 val telefonoMed = documentMed.getString("telefono")
+                val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                val fechaFormateadaMed = dateFormat.format(documentMed.getTimestamp("fecha de nacimiento")?.toDate())
 
                 FirebaseFirestore.getInstance().collection("Pacientes")
                     .document(emailPac)
@@ -143,12 +149,15 @@ class AsigMedFragmentAdm : Fragment() {
                         val apellidosPac = documentPac.getString("apellidos")
                         val sexoPac = documentPac.getString("sexo")
                         val telefonoPac = documentPac.getString("telefono")
+                        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                        val fechaFormateadaPac = dateFormat.format(documentPac.getTimestamp("fecha de nacimiento")?.toDate())
 
                         val medicoData = hashMapOf(
                             "nombre" to nombreMed,
                             "apellidos" to apellidosMed,
                             "sexo" to sexoMed,
-                            "telefono" to telefonoMed
+                            "telefono" to telefonoMed,
+                            "fecha de nacimiento" to fechaFormateadaMed,
                             )
 
                         // Asigna el médico al paciente en la subcolección "medicos" del paciente
@@ -164,7 +173,8 @@ class AsigMedFragmentAdm : Fragment() {
                                     "nombre" to nombrePac,
                                     "apellidos" to apellidosPac,
                                     "sexo" to sexoPac,
-                                    "telefono" to telefonoPac
+                                    "telefono" to telefonoPac,
+                                    "fecha de nacimiento" to fechaFormateadaPac
                                 )
 
                                 // Luego, asigna el paciente al médico en la subcolección "pacientes" del médico

@@ -29,12 +29,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView_apellidosPac"
+        android:id="@+id/textView_emailPac"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="8dp"
-        android:text="Fecha"
-        android:textColor="@color/grey"
+        android:text="Email"
+        android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/textView_nombrePac" />
