@@ -35,7 +35,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".paciente.spaceShooter.GameMainActivity"
+            android:name=".paciente.foodInvaders.GameMainActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:screenOrientation="landscape">
@@ -46,12 +46,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".paciente.spaceShooter.StartUp"
+            android:name=".paciente.foodInvaders.StartUp"
             android:exported="true"
             android:screenOrientation="landscape">
         </activity>
         <activity
-            android:name=".paciente.spaceShooter.GameOver"
+            android:name=".paciente.foodInvaders.GameOver"
             android:exported="true"
             android:screenOrientation="landscape">
         </activity>

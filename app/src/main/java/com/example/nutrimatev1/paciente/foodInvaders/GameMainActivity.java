@@ -1,4 +1,4 @@
-package com.example.nutrimatev1.paciente.spaceShooter;
+package com.example.nutrimatev1.paciente.foodInvaders;
 
 import android.os.Bundle;
 

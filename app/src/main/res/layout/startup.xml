@@ -6,7 +6,6 @@
     android:background="@drawable/background"
     android:gravity="center">
 
-    <!-- Título del juego -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -17,7 +16,6 @@
         android:layout_marginBottom="20dp"
         android:gravity="center" />
 
-    <!-- Contenedor del botón Play -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,7 +38,6 @@
             android:onClick="startGame" />
     </LinearLayout>
 
-    <!-- Descripción del juego -->
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
