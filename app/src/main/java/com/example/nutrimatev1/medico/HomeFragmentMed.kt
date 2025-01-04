@@ -12,6 +12,7 @@ import com.example.nutrimatev1.R
 import com.example.nutrimatev1.modelo.Alert
 import com.example.nutrimatev1.modelo.Paciente
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldPath
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import java.util.Calendar
@@ -79,12 +80,13 @@ class HomeFragmentMed : Fragment() {
             .addOnSuccessListener { docs ->
                 for (d in docs){
 
-                    var pac_nom = d.get("Nombre").toString()
-                    var pac_em = d.get("email").toString()
-                    var fechaNac = Calendar.getInstance()
-                    fechaNac.time = d.getTimestamp("fecha de nacimiento")?.toDate()
 
-                    pacientes.add(Paciente(d.id,pac_nom, pac_em , fechaNac))
+                    var pac_nom = d.get("nombre").toString()
+                    //var fechaNac = Calendar.getInstance()
+                    //fechaNac.time = d.getTimestamp("fecha de nacimiento")?.toDate()
+                    var apellidoPac = d.get("apellidos").toString()
+
+                    pacientes.add(Paciente(d.id,pac_nom, apellidoPac))
 
 
 
@@ -113,8 +115,7 @@ class HomeFragmentMed : Fragment() {
         fragment.arguments = Bundle().apply {
             putString("id", paciente.id)
             putString("nombre", paciente.nombre)
-            putString("email", paciente.email)
-            putSerializable("fechaNacimiento", paciente.fechanac)
+            //putSerializable("fechaNacimiento", paciente.fechanac)
         }
 
         parentFragmentManager.beginTransaction()
@@ -130,11 +131,11 @@ class HomeFragmentMed : Fragment() {
 
                 inner class ViewHolder(view: View): RecyclerView.ViewHolder(view){
                     val textView_nom: TextView
-                    val textView_em: TextView
+                    val textView_fch: TextView
 
                     init{
                         textView_nom = view.findViewById(R.id.textView_nombrePac)
-                        textView_em = view.findViewById(R.id.textView_fechanacPac)
+                        textView_fch = view.findViewById(R.id.textView_apellidosPac)
                     }
                 }
 
@@ -153,7 +154,8 @@ class HomeFragmentMed : Fragment() {
             holder.textView_nom.text = dataSet[position].nombre
             //val dateFormat = java.text.SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault())
             //val formattedDate = dateFormat.format(dataSet[position].fechanac.time)
-            holder.textView_em.text = dataSet[position].email
+            //holder.textView_fch.text = formattedDate
+            holder.textView_fch.text = dataSet[position].apellidos
             holder.itemView.setOnClickListener{clickListener(dataSet[position])}
 
         }

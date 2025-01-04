@@ -76,21 +76,22 @@ class DetallesPacFragmentMed : Fragment() {
         arguments?.let { bundle ->
             val id = bundle.getString("id")
             val nombre = bundle.getString("nombre")
-            val email = bundle.getString("email")
-            val fechaNacimiento = bundle.getSerializable("fechaNacimiento") as? Calendar
+            //val fechaNacimiento = bundle.getSerializable("fechaNacimiento") as? Calendar
+            val apellidos = bundle.getString("apellidos")
 
             textoNombre.text = nombre
 
 
 
-            fechaNacimiento?.let {
+            /*fechaNacimiento?.let {
                 val dateFormat = java.text.SimpleDateFormat("dd/MM/yyyy", java.util.Locale.getDefault())
                 textoFecha.text = "Fecha de Nacimiento: ${dateFormat.format(it.time)}"
-            }
+            }*/
 
-            if (id != null && nombre != null && email != null && fechaNacimiento != null) {
-                paciente = Paciente(id, nombre, email, fechaNacimiento)
+            if (id != null && nombre != null  && apellidos != null) {
+                paciente = Paciente(id, nombre, apellidos)
             } else {
+
                 Toast.makeText(requireContext(), "Faltan datos del paciente", Toast.LENGTH_SHORT).show()
             }
         }
