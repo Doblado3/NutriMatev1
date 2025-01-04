@@ -35,7 +35,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".paciente.GameMainActivity"
+            android:name=".paciente.spaceShooter.GameMainActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             android:screenOrientation="landscape">
@@ -46,12 +46,12 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".paciente.StartUp"
+            android:name=".paciente.spaceShooter.StartUp"
             android:exported="true"
             android:screenOrientation="landscape">
         </activity>
         <activity
-            android:name=".paciente.GameOver"
+            android:name=".paciente.spaceShooter.GameOver"
             android:exported="true"
             android:screenOrientation="landscape">
         </activity>

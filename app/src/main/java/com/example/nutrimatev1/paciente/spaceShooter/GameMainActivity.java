@@ -1,10 +1,8 @@
-package com.example.nutrimatev1.paciente;
+package com.example.nutrimatev1.paciente.spaceShooter;
 
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.nutrimatev1.R;
 
 public class GameMainActivity extends AppCompatActivity {
 
