@@ -5,17 +5,30 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:gravity="center">
+
+    <!-- Título del juego -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FOOD INVADERS"
+        android:textColor="@color/white"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="20dp"
+        android:gravity="center" />
+
+    <!-- Contenedor del botón Play -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/play_big"
-            android:onClick="startGame">
+            android:onClick="startGame" />
 
-        </ImageView>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -24,9 +37,18 @@
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:onClick="starGame">
-
-        </TextView>
+            android:onClick="startGame" />
     </LinearLayout>
+
+    <!-- Descripción del juego -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="¡Esquiva los disparos enemigo arrastrando tu nave de izquierda a derecha y dispara levantando el dedo de la pantalla!"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:gravity="center"
+        android:paddingHorizontal="20dp" />
 
 </LinearLayout>
