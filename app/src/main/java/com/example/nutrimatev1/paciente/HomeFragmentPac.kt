@@ -46,6 +46,13 @@ class HomeFragmentPac : Fragment() {
                     .replace(R.id.fragment_container, fragment)
                     .addToBackStack(null)
                     .commit()
+            }R.id.LLDiviertete ->{
+                startActivity(Intent(requireContext(), StartUp::class.java))
+//                val fragment = GameMainActivity()
+//                requireActivity().supportFragmentManager.beginTransaction()
+//                    .replace(R.id.fragment_container, fragment)
+//                    .addToBackStack(null)
+//                    .commit()
             }
             else -> {
                 Toast.makeText(requireContext(), "Aún no hay activity", Toast.LENGTH_SHORT).show()

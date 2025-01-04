@@ -34,6 +34,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".paciente.GameMainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            android:screenOrientation="landscape">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".paciente.StartUp"
+            android:exported="true"
+            android:screenOrientation="landscape">
+        </activity>
+        <activity
+            android:name=".paciente.GameOver"
+            android:exported="true"
+            android:screenOrientation="landscape">
+        </activity>
 
 
         <activity
