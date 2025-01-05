@@ -124,6 +124,21 @@ class DetallesPacFragmentMed : Fragment() {
 
             }
 
+        // Guardar la cita en la colección "Pacientes"
+        Firebase.firestore.collection("Pacientes")
+            .document(paciente.id)
+            .collection("citas")
+            .add(mapOf(
+                "emailMedico" to emailMedico,
+                "fechahora" to Timestamp(fecha.time)
+            ))
+            .addOnSuccessListener {
+                Alert.showAlert(requireContext(), "Cita guardada en la colección de pacientes")
+            }
+            .addOnFailureListener {
+                Alert.showAlert(requireContext(), "Ha surgido un error al asignar la cita en la colección de pacientes")
+            }
+
     }
 
 
