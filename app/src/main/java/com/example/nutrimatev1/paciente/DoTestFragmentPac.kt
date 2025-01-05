@@ -15,7 +15,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nutrimatev1.R
 import com.example.nutrimatev1.modelo.Question
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import java.util.Calendar
 
 
 class DoTestFragmentPac : Fragment() {
@@ -129,6 +132,7 @@ class DoTestFragmentPac : Fragment() {
 
     private fun saveTestResultsToFirestore() {
         val db = FirebaseFirestore.getInstance()
+        val pactEmail = Firebase.auth.currentUser?.email
 
         // Obtener los valores de las respuestas seleccionadas
         var totalScore = 0
@@ -147,9 +151,10 @@ class DoTestFragmentPac : Fragment() {
         // Crear el objeto a guardar
         val testResult = hashMapOf(
             "testTitle" to testTitle,
-            "patientId" to "ID_DEL_PACIENTE", // Reemplaza con un identificador único del paciente
+            "pacEmail" to pactEmail,
             "answers" to answers,
             "totalScore" to totalScore,
+            "fechaRealizacion" to Calendar.getInstance().time,
             "timestamp" to System.currentTimeMillis()
         )
 
