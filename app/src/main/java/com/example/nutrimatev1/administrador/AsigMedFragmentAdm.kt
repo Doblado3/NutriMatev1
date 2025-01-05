@@ -1,15 +1,22 @@
 package com.example.nutrimatev1.administrador
 
+import android.app.Activity
+import android.graphics.Typeface
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.example.nutrimatev1.R
 import com.example.nutrimatev1.modelo.Medico
 import com.example.nutrimatev1.modelo.Paciente
@@ -44,6 +51,8 @@ class AsigMedFragmentAdm : Fragment() {
         pacientesSpinner = view.findViewById(R.id.pacientes_spinner)
         asignarButton = view.findViewById(R.id.asignar_button)
 
+        medicosSpinner.onItemSelectedListener = SpinnerActivity()
+
         obtenerMedicos {
             obtenerPacientes {
                 asignarButton.setOnClickListener {
@@ -77,7 +86,42 @@ class AsigMedFragmentAdm : Fragment() {
                     nombreCompleto to email
                 }
                 medicosMap = medicos
-                val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, medicos.keys.toList())
+
+                val nombresMedicos = mutableListOf("Porfavor, selecciona a un médico")
+                nombresMedicos.addAll(medicos.keys.toList())
+
+                //Personalizo el Spinner para que resaltar el primer elemento que no es ni paciente ni médico
+                val adapter = object : ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, nombresMedicos) {
+                    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                        val view = super.getView(position, convertView, parent)
+                        val textView = view.findViewById<TextView>(android.R.id.text1)
+
+
+                        if (position == 0) {
+                            textView.setTextColor(ContextCompat.getColor(context, R.color.black))
+                            textView.setTypeface(textView.typeface, Typeface.BOLD)
+                        } else {
+                            textView.setTextColor(ContextCompat.getColor(context, R.color.black))
+                            textView.setTypeface(Typeface.DEFAULT)
+                        }
+                        return view
+                    }
+
+                    override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+                        val view = super.getDropDownView(position, convertView, parent)
+                        val textView = view.findViewById<TextView>(android.R.id.text1)
+
+
+                        if (position == 0) {
+                            textView.setTextColor(ContextCompat.getColor(context, R.color.black))
+                            textView.setTypeface(textView.typeface, Typeface.BOLD)
+                        } else {
+                            textView.setTextColor(ContextCompat.getColor(context, R.color.black))
+                            textView.setTypeface(Typeface.DEFAULT)
+                        }
+                        return view
+                    }
+                }
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 medicosSpinner.adapter = adapter
                 callback()
@@ -98,7 +142,42 @@ class AsigMedFragmentAdm : Fragment() {
                     nombreCompleto to email
                 }
                 pacientesMap = pacientes
-                val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, pacientes.keys.toList())
+
+                val nombresPacientes = mutableListOf("Ahora, asígnale un paciente")
+                nombresPacientes.addAll(pacientes.keys.toList())
+
+                //Personalizo el Spinner para que resaltar el primer elemento que no es ni paciente ni médico
+                val adapter = object : ArrayAdapter<String>(requireContext(), android.R.layout.simple_spinner_item, nombresPacientes) {
+                    override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
+                        val view = super.getView(position, convertView, parent)
+                        val textView = view.findViewById<TextView>(android.R.id.text1)
+
+
+                        if (position == 0) {
+                            textView.setTextColor(ContextCompat.getColor(context, R.color.black))
+                            textView.setTypeface(textView.typeface, Typeface.BOLD)
+                        } else {
+                            textView.setTextColor(ContextCompat.getColor(context, R.color.black))
+                            textView.setTypeface(Typeface.DEFAULT)
+                        }
+                        return view
+                    }
+
+                    override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
+                        val view = super.getDropDownView(position, convertView, parent)
+                        val textView = view.findViewById<TextView>(android.R.id.text1)
+
+
+                        if (position == 0) {
+                            textView.setTextColor(ContextCompat.getColor(context, R.color.black))
+                            textView.setTypeface(textView.typeface, Typeface.BOLD)
+                        } else {
+                            textView.setTextColor(ContextCompat.getColor(context, R.color.black))
+                            textView.setTypeface(Typeface.DEFAULT)
+                        }
+                        return view
+                    }
+                }
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 pacientesSpinner.adapter = adapter
                 callback()
@@ -196,5 +275,26 @@ class AsigMedFragmentAdm : Fragment() {
                     }
 
                 }
+    }
+
+    inner class SpinnerActivity : Activity(), AdapterView.OnItemSelectedListener {
+
+        override fun onItemSelected(parent: AdapterView<*>, view: View?, pos: Int, id: Long) {
+
+            if(pos == 0){
+
+                pacientesSpinner.visibility = INVISIBLE
+
+            }else{
+
+                pacientesSpinner.visibility = VISIBLE
+
+            }
+
+        }
+
+        override fun onNothingSelected(parent: AdapterView<*>) {
+
+        }
     }
 }

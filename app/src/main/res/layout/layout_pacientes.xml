@@ -32,7 +32,7 @@
         android:id="@+id/textView_emailPac"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="8dp"
+        android:paddingLeft="4dp"
         android:text="Email"
         android:textColor="@color/black"
         android:textSize="16sp"
