@@ -26,7 +26,7 @@ class HomeFragmentPac : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         view.findViewById<View>(R.id.LLInfo).setOnClickListener { onClickHomePacientes(it) }
-        view.findViewById<View>(R.id.LLHistorial).setOnClickListener { onClickHomePacientes(it) }
+        view.findViewById<View>(R.id.LLCitas).setOnClickListener { onClickHomePacientes(it) }
         view.findViewById<View>(R.id.LLTests).setOnClickListener { onClickHomePacientes(it) }
         view.findViewById<View>(R.id.LLDiviertete).setOnClickListener { onClickHomePacientes(it) }
 
@@ -56,8 +56,11 @@ class HomeFragmentPac : Fragment() {
 //                    .commit()
             }
             else -> {
-                Toast.makeText(requireContext(), "Aún no hay activity", Toast.LENGTH_SHORT).show()
-            }
+                val fragment = CitasFragmentPac()
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, fragment)
+                    .addToBackStack(null)
+                    .commit()         }
         }
     }
 
