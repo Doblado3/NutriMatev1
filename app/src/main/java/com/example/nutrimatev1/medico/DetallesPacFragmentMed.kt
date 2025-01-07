@@ -3,6 +3,7 @@ package com.example.nutrimatev1.medico
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -65,6 +66,7 @@ class DetallesPacFragmentMed : Fragment() {
         val dateBox = DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
             TimePickerDialog(
                 requireContext(),
+                R.style.CustomDatePickerStyle,
                 { _, hourOfDay, minute ->
                     // Establece la hora seleccionada en el calendario
                     calendarBox.set(Calendar.HOUR_OF_DAY, hourOfDay)
@@ -76,18 +78,30 @@ class DetallesPacFragmentMed : Fragment() {
                 calendarBox.get(Calendar.HOUR_OF_DAY),
                 calendarBox.get(Calendar.MINUTE),
                 true
-            ).show()
-        }
+            ).apply {
+                setOnShowListener {
+                    getButton(TimePickerDialog.BUTTON_NEGATIVE)?.setTextColor(Color.BLACK)
+                    getButton(TimePickerDialog.BUTTON_POSITIVE)?.setTextColor(Color.BLACK)
+                }
+        }.show()
+            }
 
 
 
         botonCitas.setOnClickListener{
-            DatePickerDialog(
+            val datePickerDialog = DatePickerDialog(
                 requireContext(),
+                R.style.CustomDatePickerStyle,
                 dateBox,
                 calendarBox.get(Calendar.YEAR),
                 calendarBox.get(Calendar.MONTH),
-                calendarBox.get(Calendar.DAY_OF_MONTH)).show()
+                calendarBox.get(Calendar.DAY_OF_MONTH))
+
+            datePickerDialog.setOnShowListener {
+                datePickerDialog.getButton(DatePickerDialog.BUTTON_NEGATIVE)?.setTextColor(Color.BLACK)
+                datePickerDialog.getButton(DatePickerDialog.BUTTON_POSITIVE)?.setTextColor(Color.BLACK)
+            }
+                datePickerDialog.show()
         }
 
 

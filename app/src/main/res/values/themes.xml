@@ -9,6 +9,10 @@
 
     </style>
 
+    <style name="CustomDatePickerStyle" parent="Theme.MaterialComponents.DayNight.Dialog">
+        <item name="colorAccent">@color/prueba2</item>
+    </style>
+
 
     
 
