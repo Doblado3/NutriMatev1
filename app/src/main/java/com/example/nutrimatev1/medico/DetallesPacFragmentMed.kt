@@ -2,15 +2,12 @@ package com.example.nutrimatev1.medico
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -18,11 +15,11 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.nutrimatev1.LoginActivity
 import com.example.nutrimatev1.R
 import com.example.nutrimatev1.modelo.Alert
 import com.example.nutrimatev1.modelo.Cita
 import com.example.nutrimatev1.modelo.Paciente
+import com.example.nutrimatev1.modelo.ResultadosTest
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -40,6 +37,7 @@ class DetallesPacFragmentMed : Fragment() {
     private lateinit var botonCitas: AppCompatButton
     private lateinit var citasMed: RecyclerView
     private lateinit var textoCitas: TextView
+    private lateinit var resultadosPac: RecyclerView
 
 
     override fun onCreateView(
@@ -60,6 +58,7 @@ class DetallesPacFragmentMed : Fragment() {
         botonCitas = view.findViewById(R.id.botonAsignarCitaPac)
         citasMed = view.findViewById(R.id.citasMedRec)
         textoCitas = view.findViewById(R.id.textViewDescCitasMed)
+        resultadosPac = view.findViewById(R.id.resultadosPacMed)
 
 
         val calendarBox = Calendar.getInstance()
@@ -126,6 +125,7 @@ class DetallesPacFragmentMed : Fragment() {
 
                 //Si no inicializamos el paciente antes de mostrar las citas, la aplicación "crashea"
                 muestraCitas()
+                muestraResultadosPac()
 
             } else {
 
@@ -136,6 +136,30 @@ class DetallesPacFragmentMed : Fragment() {
         botonBorrarPaciente.setOnClickListener {
             eliminarPaciente()
         }
+    }
+
+    private fun muestraResultadosPac() {
+        var resultados = mutableListOf<ResultadosTest>()
+        FirebaseFirestore.getInstance().collection("Pacientes")
+            .document(paciente.id)
+            .collection("ResultadosTests")
+            .get()
+            .addOnSuccessListener { r ->
+                for(resultado in r){
+                    var nombreTest = resultado.get("Nombre del Test").toString()
+                    var total = resultado.getLong("acumulado")!!.toInt()
+                    var fechaTest = Calendar.getInstance()
+                    fechaTest.time = resultado.getTimestamp("fechaRealizacion")?.toDate()
+                    val respuestas = resultado.get("respuestas") as? Map<String, String> ?: emptyMap()
+
+                    resultados.add(ResultadosTest(resultado.id,nombreTest, total, fechaTest, respuestas))
+                }
+
+                resultadosPac.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                resultadosPac.adapter = AdaptadorResultados(resultados)
+
+            }
+
     }
 
     private fun muestraCitas() {
@@ -317,6 +341,36 @@ class DetallesPacFragmentMed : Fragment() {
             holder.textView_fechaCita.text = "Fecha: ${formattedDate}"
 
             holder.DeleteCita.setOnClickListener{clickListener(dataSet[position].id) }
+        }
+
+    }
+
+    inner class AdaptadorResultados(private val dataSet: List<ResultadosTest>):
+        RecyclerView.Adapter<AdaptadorResultados.ViewHolder>(){
+
+        inner class ViewHolder(view: View): RecyclerView.ViewHolder(view){
+
+            val nombreTestListado: TextView = view.findViewById(R.id.textViewNombreTest)
+            val resultadoTest: TextView = view.findViewById(R.id.textViewResultadoTest)
+
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.layout_resultados_tests, parent, false)
+
+            return ViewHolder(view)
+        }
+
+        override fun getItemCount(): Int {
+            return dataSet.size
+        }
+
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            val dateFormat = java.text.SimpleDateFormat("dd/MM/yyyy HH:mm", java.util.Locale.getDefault())
+            val formattedDate = dateFormat.format(dataSet[position].fecha.time)
+            holder.nombreTestListado.text = "Test ${dataSet[position].nombre} realizado el: ${formattedDate}"
+            holder.resultadoTest.text = "Puntuación Obtenida: ${dataSet[position].acumulado}"
         }
 
     }

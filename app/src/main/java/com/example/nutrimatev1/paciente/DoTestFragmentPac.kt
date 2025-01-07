@@ -11,156 +11,170 @@ import android.widget.RadioButton
 import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.nutrimatev1.R
-import com.example.nutrimatev1.modelo.Question
+import com.example.nutrimatev1.modelo.Paciente
+import com.example.nutrimatev1.modelo.PreguntaOpciones
+import com.example.nutrimatev1.modelo.Test
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Locale
 
 
 class DoTestFragmentPac : Fragment() {
-    private lateinit var testTitle: String
+
+    private lateinit var testTitle: TextView
     private lateinit var recyclerViewQuestions: RecyclerView
-    private lateinit var questionAdapter: QuestionAdapter
-    private val questions = mutableListOf<Question>()
-    private val answers = mutableMapOf<String, String>() // Guarda respuestas por pregunta
+    private lateinit var botonFin: AppCompatButton
+    private lateinit var test: Test
+    private lateinit var preguntaOpciones: List<PreguntaOpciones>
+
+    private var respuestas = mutableMapOf<String, String>()
+
+
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_do_test_pac, container, false)
+        return inflater.inflate(R.layout.fragment_do_test_pac, container, false)
+    }
 
-        // Obtener el título del test desde los argumentos
-        testTitle = arguments?.getString("testTitle") ?: "Test"
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-        // Configurar la interfaz con el título del test
-        val tvTestTitle: TextView = view.findViewById(R.id.tvTestTitle)
-        tvTestTitle.text = testTitle
 
-        // Inicializar RecyclerView
+        testTitle = view.findViewById(R.id.tvTestTitle)
         recyclerViewQuestions = view.findViewById(R.id.recyclerViewQuestions)
-        recyclerViewQuestions.layoutManager = LinearLayoutManager(requireContext())
-        questionAdapter = QuestionAdapter(questions)
-        recyclerViewQuestions.adapter = questionAdapter
+        botonFin = view.findViewById(R.id.btnFinTest)
 
-        // Cargar preguntas y opciones desde Firestore
-        loadQuestionsFromFirestore()
+        arguments?.let { bundle ->
+            val id = bundle.getString("id")
+            val descripcion = bundle.getString("descripcion")
+            val explicacion = bundle.getString("explicacion")
+            val opciones = bundle.getStringArrayList("opciones")
+            val preguntas = bundle.getStringArrayList("preguntas")
+            val valores = bundle.getStringArrayList("valores")
 
-        // Configurar el botón "Finalizar"
-        val btnFinishTest: Button = view.findViewById(R.id.btnFinTest)
-        btnFinishTest.setOnClickListener {
-            saveTestResultsToFirestore() // Llamar la función para guardar respuestas
-        }
+            testTitle.text = id
 
-        return view
-    }
 
-    private fun loadQuestionsFromFirestore() {
-        val db = FirebaseFirestore.getInstance()
-        db.collection("Tests")
-            .whereEqualTo("title", testTitle)
-            .get()
-            .addOnSuccessListener { result ->
-                for (document in result) {
-                    val questionsList = document.get("questions") as? List<String> ?: emptyList()
-                    val optionsList = document.get("options") as? List<String> ?: emptyList()
-                    val valuesList = document.get("values") as? List<String> ?: emptyList()
+            if (id != null && descripcion != null  && explicacion != null && opciones != null
+                && preguntas != null && valores != null) {
+                test = Test(id, descripcion, explicacion, opciones, preguntas, valores)
 
-                    for (question in questionsList) {
-                        // Asigna todas las opciones a cada pregunta
-                        questions.add(Question(question, optionsList, valuesList))
-                    }
+                preguntaOpciones = preguntas.mapIndexed { index, pregunta ->
+                    PreguntaOpciones(
+                        pregunta,
+                        opciones[index].split(","),
+                        valores[index].split(","))
                 }
-                questionAdapter.notifyDataSetChanged()
+
+                recyclerViewQuestions.layoutManager = LinearLayoutManager(requireContext())
+                recyclerViewQuestions.adapter = AdaptadorPreguntas(preguntaOpciones)
+
+
+
+            } else {
+
+                Toast.makeText(requireContext(), "El test no está completo", Toast.LENGTH_SHORT).show()
             }
-            .addOnFailureListener { exception ->
-                Log.e("DoTestFragmentPac", "Error loading questions", exception)
-            }
+        }
+
+
+        botonFin.setOnClickListener {
+            guardarRespuestas()
+        }
+
+
     }
 
 
-    companion object {
-        fun newInstance(testTitle: String): DoTestFragmentPac {
-            val fragment = DoTestFragmentPac()
-            val args = Bundle()
-            args.putString("testTitle", testTitle)
-            fragment.arguments = args
-            return fragment
-        }
-    }
 
-    inner class QuestionAdapter(private val questions: List<Question>) : RecyclerView.Adapter<QuestionAdapter.QuestionViewHolder>() {
+    inner class AdaptadorPreguntas(private val preguntaConOpciones: List<PreguntaOpciones>) :
+        RecyclerView.Adapter<AdaptadorPreguntas.ViewHolder>() {
 
-        inner class QuestionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-            val questionTitle: TextView = itemView.findViewById(R.id.tvQuestionTitle)
-            val optionsGroup: RadioGroup = itemView.findViewById(R.id.rgOptions)
+        inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+            val tituloPregunta: TextView = view.findViewById(R.id.tvQuestionTitle)
+            val listaOpciones: RadioGroup = view.findViewById(R.id.rgOptions)
         }
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuestionViewHolder {
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.item_question, parent, false)
-            return QuestionViewHolder(view)
+            return ViewHolder(view)
         }
 
-        override fun onBindViewHolder(holder: QuestionViewHolder, position: Int) {
-            val question = questions[position]
-            holder.questionTitle.text = question.title
-            holder.optionsGroup.removeAllViews()
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            val preguntaOpcn = preguntaConOpciones[position]
+            holder.tituloPregunta.text = preguntaOpcn.pregunta
+            holder.listaOpciones.removeAllViews()
 
-            for (option in question.options) {
-                val radioButton = RadioButton(holder.itemView.context)
-                radioButton.text = option
-                holder.optionsGroup.addView(radioButton)
+            for ((index,opcion) in preguntaOpcn.opciones.withIndex()) {
+                val radioButton = RadioButton(holder.itemView.context).apply {
+                    text = opcion
+                    id = index
+                }
+
+                holder.listaOpciones.addView(radioButton)
 
                 // Escuchar los cambios de selección
-                holder.optionsGroup.setOnCheckedChangeListener { _, checkedId ->
-                    val selectedOption = holder.itemView.findViewById<RadioButton>(checkedId)?.text.toString()
-                    answers[question.title] = selectedOption
+                holder.listaOpciones.setOnCheckedChangeListener { _, checkedId ->
+                    val selectedOption = preguntaOpcn.opciones[checkedId]
+                    respuestas[preguntaOpcn.pregunta] = selectedOption
                 }
             }
         }
 
 
         override fun getItemCount(): Int {
-            return questions.size
+            return preguntaConOpciones.size
         }
     }
 
-    private fun saveTestResultsToFirestore() {
-        val db = FirebaseFirestore.getInstance()
-        val pactEmail = Firebase.auth.currentUser?.email
+    private fun guardarRespuestas() {
+
+        val pactEmail = Firebase.auth.currentUser!!.email!!
 
         // Obtener los valores de las respuestas seleccionadas
         var totalScore = 0
-        for ((question, selectedOption) in answers) {
-            // Busca la opción seleccionada en las preguntas para obtener su valor
-            val testDocument = questions.find { it.title == question }
-            if (testDocument != null) {
-                val optionIndex = testDocument.options.indexOf(selectedOption)
-                if (optionIndex != -1) {
-                    val value = testDocument.values[optionIndex].toIntOrNull() ?: 0
-                    totalScore += value
+        for ((pregunta, opcionSeleccionada) in respuestas) {
+            val preguntaOpc = preguntaOpciones.find { it.pregunta == pregunta }
+            if (preguntaOpc != null) {
+                val indice = preguntaOpc.opciones.indexOf(opcionSeleccionada)
+                if (indice != -1) {
+                    val valor = preguntaOpc.valores[indice].toIntOrNull() ?: 0
+                    totalScore += valor
                 }
             }
         }
 
-        // Crear el objeto a guardar
-        val testResult = hashMapOf(
-            "testTitle" to testTitle,
-            "pacEmail" to pactEmail,
-            "answers" to answers,
-            "totalScore" to totalScore,
-            "fechaRealizacion" to Calendar.getInstance().time,
-            "timestamp" to System.currentTimeMillis()
+        val resultadoTest = hashMapOf(
+            "Nombre del Test" to test.id,
+            "acumulado" to totalScore,
+            "respuestas" to respuestas,
+            "fechaRealizacion" to Timestamp(Calendar.getInstance().time)
         )
 
-        // Guardar en la colección ResultadosTests
-        db.collection("ResultadosTests")
-            .add(testResult)
+        val timeStamp = System.currentTimeMillis()
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd_HH:mm", Locale.getDefault())
+        val formattedTime = dateFormat.format(timeStamp)
+        val testId = "${test.id}_${formattedTime}"
+
+
+        Firebase.firestore.collection("Pacientes")
+            .document(pactEmail)
+            .collection("ResultadosTests")
+            .document(testId)
+            .set(resultadoTest)
             .addOnSuccessListener {
                 Toast.makeText(requireContext(), "Resultados guardados exitosamente", Toast.LENGTH_SHORT).show()
 

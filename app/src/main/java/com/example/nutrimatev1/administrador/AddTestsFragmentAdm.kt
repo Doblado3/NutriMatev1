@@ -18,47 +18,53 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class AddTestsFragmentAdm : Fragment() {
 
-    private lateinit var nombreNewTest: EditText
-    private lateinit var descripcionNewTest: EditText
-    private lateinit var preguntasNewTest: EditText
-    private lateinit var opcionesNewTest: EditText
-    private lateinit var valoresNewTest: EditText
-    private lateinit var explicacionNewTest: EditText
-    private lateinit var buttonAddNewTest: Button
-    private lateinit var proBarAddTest: ProgressBar
+    private lateinit var nombreTest: EditText
+    private lateinit var descripcionTest: EditText
+    private lateinit var preguntasTest: EditText
+    private lateinit var opcionesTest: EditText
+    private lateinit var valoresTest: EditText
+    private lateinit var explicacionTest: EditText
+    private lateinit var buttonAddTest: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_add_tests_adm, container, false)
-
-        nombreNewTest = view.findViewById(R.id.nombreNewTest)
-        descripcionNewTest = view.findViewById(R.id.descripcionNewTest)
-        preguntasNewTest = view.findViewById(R.id.preguntasNewTest)
-        opcionesNewTest = view.findViewById(R.id.opcionesNewTest)
-        valoresNewTest = view.findViewById(R.id.valoresNewTest)
-        explicacionNewTest = view.findViewById(R.id.explicacionNewTest)
-        buttonAddNewTest = view.findViewById(R.id.buttonAddNewTest)
-
-
-        buttonAddNewTest.setOnClickListener {
-            addTestToFirestore()
-        }
-
-        return view
+        return inflater.inflate(R.layout.fragment_add_tests_adm, container, false)
     }
 
-    private fun addTestToFirestore() {
-        val title = nombreNewTest.text.toString()
-        val description = descripcionNewTest.text.toString()
-        val questions = preguntasNewTest.text.toString().split(",").map { it.trim() }
-        val options = opcionesNewTest.text.toString().split(",").map { it.trim() }
-        val values = valoresNewTest.text.toString().split(",").map { it.trim() }
-        val explanation = explicacionNewTest.text.toString().trim()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+
+        nombreTest = view.findViewById(R.id.nombreNewTest)
+        descripcionTest = view.findViewById(R.id.descripcionNewTest)
+        preguntasTest = view.findViewById(R.id.preguntasNewTest)
+        opcionesTest = view.findViewById(R.id.opcionesNewTest)
+        valoresTest = view.findViewById(R.id.valoresNewTest)
+        explicacionTest = view.findViewById(R.id.explicacionNewTest)
+        buttonAddTest = view.findViewById(R.id.buttonAddNewTest)
+
+
+        buttonAddTest.setOnClickListener {
+            añadirTests()
+        }
+
+
+
+    }
+
+    private fun añadirTests() {
+
+        val titulo = nombreTest.text.toString()
+        val descripcion = descripcionTest.text.toString()
+        val preguntas = preguntasTest.text.toString().split(",").map { it.trim() }
+        val opciones = opcionesTest.text.toString().split(",").map { it.trim() }
+        val valores = valoresTest.text.toString().split(",").map { it.trim() }
+        val explicacion = explicacionTest.text.toString().trim()
 
         //Verificar que todos los campos estén completos
-        if (title.isEmpty() || description.isEmpty() || questions.isEmpty() || options.isEmpty() || values.isEmpty() || explanation.isEmpty()) {
+        if (titulo.isEmpty() || descripcion.isEmpty() || preguntas.isEmpty() || opciones.isEmpty() || valores.isEmpty() || explicacion.isEmpty()) {
             Toast.makeText(requireContext(), "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show()
             return
         }
@@ -66,16 +72,16 @@ class AddTestsFragmentAdm : Fragment() {
 
 
         val test = hashMapOf(
-            "title" to title,
-            "description" to description,
-            "questions" to questions,
-            "options" to options,
-            "values" to values,
-            "explanation" to explanation
+            "descripcion" to descripcion,
+            "preguntas" to preguntas,
+            "opciones" to opciones,
+            "valores" to valores,
+            "explicacion" to explicacion
         )
 
-        val db = FirebaseFirestore.getInstance()
-        db.collection("Tests").add(test)
+        FirebaseFirestore.getInstance().collection("Tests")
+            .document(titulo)
+            .set(test)
             .addOnSuccessListener {
                 Toast.makeText(requireContext(), "Test creado con éxito", Toast.LENGTH_SHORT).show()
                 //Volviendo al fragment anterior

@@ -1,24 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".paciente.TestsFragmentPac">
 
 
     <TextView
         android:id="@+id/tvTitleTestsPac"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text= "Tests Disponibles"
-        android:textAppearance="?attr/textAppearanceHeadline6"
-        android:gravity="center"
-        android:paddingBottom="16dp" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="32dp"
+        android:textSize="18sp"
+        android:textColor="@color/prueba"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="32dp"
+        android:text= "Tests Disponibles:"
+         />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewTests"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical" />
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTitleTestsPac"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+         />
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

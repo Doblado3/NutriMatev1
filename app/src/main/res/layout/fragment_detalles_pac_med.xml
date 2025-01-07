@@ -8,6 +8,30 @@
     tools:context=".medico.DetallesPacFragmentMed">
 
 
+    <TextView
+        android:id="@+id/textViewActPacMed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginStart="16dp"
+        android:textStyle="bold"
+        android:textColor="@color/prueba"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        android:layout_marginTop="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/resultadosPacMed"
+        android:layout_marginBottom="8dp"
+        android:text="Actividad reciente de tus pacientes:" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/resultadosPacMed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@+id/textViewActPacMed"
+        />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/botonAsignarCitaPac"
         android:layout_width="wrap_content"
