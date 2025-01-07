@@ -26,13 +26,15 @@
         android:id="@+id/textViewDescCitasMed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tus próximas citas:"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@id/citasMedRec"
-        android:layout_marginBottom="8dp"
         android:layout_marginStart="16dp"
-        app:layout_constraintStart_toStartOf="parent"/>
+        android:layout_marginTop="328dp"
+        android:layout_marginBottom="8dp"
+        android:text="Tus próximas citas:"
+        android:textColor="@color/prueba"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/citasMedRec"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/citasMedRec"

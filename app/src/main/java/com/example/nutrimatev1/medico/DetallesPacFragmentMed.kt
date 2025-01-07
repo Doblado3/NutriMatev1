@@ -2,6 +2,7 @@ package com.example.nutrimatev1.medico
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,9 +13,11 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.AppCompatButton
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.nutrimatev1.LoginActivity
 import com.example.nutrimatev1.R
 import com.example.nutrimatev1.modelo.Alert
 import com.example.nutrimatev1.modelo.Cita
@@ -35,6 +38,7 @@ class DetallesPacFragmentMed : Fragment() {
 
     private lateinit var botonCitas: AppCompatButton
     private lateinit var citasMed: RecyclerView
+    private lateinit var textoCitas: TextView
 
 
     override fun onCreateView(
@@ -54,6 +58,7 @@ class DetallesPacFragmentMed : Fragment() {
 
         botonCitas = view.findViewById(R.id.botonAsignarCitaPac)
         citasMed = view.findViewById(R.id.citasMedRec)
+        textoCitas = view.findViewById(R.id.textViewDescCitasMed)
 
 
         val calendarBox = Calendar.getInstance()
@@ -77,8 +82,12 @@ class DetallesPacFragmentMed : Fragment() {
 
 
         botonCitas.setOnClickListener{
-            DatePickerDialog(requireContext(), dateBox, calendarBox.get(Calendar.YEAR),
-                calendarBox.get(Calendar.MONTH), calendarBox.get(Calendar.DAY_OF_MONTH)).show()
+            DatePickerDialog(
+                requireContext(),
+                dateBox,
+                calendarBox.get(Calendar.YEAR),
+                calendarBox.get(Calendar.MONTH),
+                calendarBox.get(Calendar.DAY_OF_MONTH)).show()
         }
 
 
@@ -141,6 +150,14 @@ class DetallesPacFragmentMed : Fragment() {
                     borrarCita(citaId)
                 }
 
+                if(AdaptadorCitas(citas){}.itemCount > 0){
+                    textoCitas.text = "Tus próximas citas:"
+                }else{
+                    textoCitas.text = "Aquí se mostrarán tus próximas citas"
+                }
+
+
+
             }
 
     }
@@ -157,24 +174,27 @@ class DetallesPacFragmentMed : Fragment() {
                 val fecha = Calendar.getInstance()
                 fecha.set(year, month, day, hour, minute)
 
+                val citaId = fecha.time.toString()
+
+                val citaData = hashMapOf(
+                    "emailMedico" to emailMedico,
+                    "fechahora" to Timestamp(fecha.time),
+                    "nombre" to nombreMed,
+                    "apellidos" to apellidosMed
+                )
+
+                //Si usamos .add() asigna unn ID automático, lo cual no nos permite borrar
+                //al mismo tiempo en ámbas partes de la base de datos
                 Firebase.firestore.collection("Medicos")
                     .document(emailMedico)
                     .collection("pacientes")
                     .document(paciente.id)
                     .collection("citas")
-                    .add(
-                        mapOf(
-                            "emailMedico" to emailMedico,
-                            "fechahora" to Timestamp(fecha.time),
-                            "nombre" to nombreMed,
-                            "apellidos" to apellidosMed
-
-                        )
-                    )
+                    .document(citaId)
+                    .set(citaData)
                     .addOnSuccessListener {
                         Alert.showAlert(requireContext(), "Cita guardada de forma correcta")
                         muestraCitas()
-
                     }
                     .addOnFailureListener {
 
@@ -186,14 +206,8 @@ class DetallesPacFragmentMed : Fragment() {
                 Firebase.firestore.collection("Pacientes")
                     .document(paciente.id)
                     .collection("citas")
-                    .add(
-                        mapOf(
-                            "emailMedico" to emailMedico,
-                            "fechahora" to Timestamp(fecha.time),
-                            "nombre" to nombreMed,
-                            "apellidos" to apellidosMed
-                        )
-                    )
+                    .document(citaId)
+                    .set(citaData)
                     .addOnFailureListener {
                         Alert.showAlert(
                             requireContext(),
@@ -206,19 +220,26 @@ class DetallesPacFragmentMed : Fragment() {
 
 
     private fun eliminarPaciente() {
-            Firebase.firestore.collection("Medicos")
-                .document(Firebase.auth.currentUser!!.email.toString())
-                .collection("pacientes")
-                .document(paciente.id)
-                .delete()
-                .addOnSuccessListener {
-                    Alert.showAlert(requireContext(), "Paciente eliminado correctamente")
-                    // Regresar al fragment anterior
-                    parentFragmentManager.popBackStack()
-                }
-                .addOnFailureListener {
-                    Alert.showAlert(requireContext(), "Error al eliminar el paciente")
-                }
+        val builder = AlertDialog.Builder(requireContext(), R.style.CustomAlertDialogTheme)
+        builder.setTitle("Vas a eliminar a este paciente")
+            .setMessage("¿Estas seguro?")
+            .setPositiveButton("Sí") { _, _ ->
+
+                Firebase.firestore.collection("Medicos")
+                    .document(Firebase.auth.currentUser!!.email.toString())
+                    .collection("pacientes")
+                    .document(paciente.id)
+                    .delete()
+                    .addOnSuccessListener {
+                        Alert.showAlert(requireContext(), "Paciente eliminado correctamente")
+                        // Regresar al fragment anterior
+                        parentFragmentManager.popBackStack()
+                    }
+                    .addOnFailureListener {
+                        Alert.showAlert(requireContext(), "Error al eliminar el paciente")
+                    }
+            }.setNegativeButton("Cancelar", null)
+            .show()
 
         }
 
@@ -236,6 +257,18 @@ class DetallesPacFragmentMed : Fragment() {
             }
             .addOnFailureListener { e ->
                 Toast.makeText(requireContext(), "Error al eliminar la cita: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+
+        Firebase.firestore.collection("Pacientes")
+            .document(paciente.id)
+            .collection("citas")
+            .document(citaId)
+            .delete()
+            .addOnSuccessListener {
+                muestraCitas()
+            }
+            .addOnFailureListener{
+                Alert.showAlert(requireContext(), "Error al borrar la cita")
             }
 
 
