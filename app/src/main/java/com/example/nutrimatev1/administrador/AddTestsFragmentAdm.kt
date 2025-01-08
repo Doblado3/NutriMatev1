@@ -69,6 +69,12 @@ class AddTestsFragmentAdm : Fragment() {
             return
         }
 
+        // Verificar que el número de opciones y valores sea el mismo
+        if (opciones.size != valores.size) {
+            Toast.makeText(requireContext(), "El número de opciones y valores debe ser el mismo", Toast.LENGTH_SHORT).show()
+            return
+        }
+
 
 
         val test = hashMapOf(

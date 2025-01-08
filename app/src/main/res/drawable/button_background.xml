@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!-- Estado cuando el botón es presionado -->
@@ -9,16 +11,31 @@
         </shape>
     </item>
 
-    <!-- Estado normal del botón -->
-    <item>
+    <!-- Estado cuando el botón está deshabilitado -->
+    <item android:state_enabled="false">
         <shape android:shape="rectangle">
-            <solid android:color="#FFFFFF" /> <!-- Fondo blanco normal -->
-            <stroke
-                android:width="2dp"
-                android:color="@color/prueba" /> <!-- Borde naranja -->
+            <solid android:color="#E0E0E0" /> <!-- Fondo gris claro -->
+            <stroke android:width="2dp" android:color="#BDBDBD" /> <!-- Borde gris -->
             <corners android:radius="16dp" /> <!-- Bordes redondeados -->
         </shape>
     </item>
 
+    <!-- Estado cuando el botón está enfocado -->
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <solid android:color="#FAE9D7" /> <!-- Fondo anaranjado -->
+            <stroke android:width="2dp" android:color="@color/prueba" /> <!-- Borde naranja -->
+            <corners android:radius="16dp" /> <!-- Bordes redondeados -->
+        </shape>
+    </item>
+
+    <!-- Estado normal del botón -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF" /> <!-- Fondo blanco normal -->
+            <stroke android:width="2dp" android:color="@color/prueba" /> <!-- Borde naranja -->
+            <corners android:radius="16dp" /> <!-- Bordes redondeados -->
+        </shape>
+    </item>
 
 </selector>

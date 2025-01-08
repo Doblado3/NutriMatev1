@@ -63,27 +63,34 @@ class DetallesPacFragmentMed : Fragment() {
 
         val calendarBox = Calendar.getInstance()
         val dateBox = DatePickerDialog.OnDateSetListener { datePicker, year, month, day ->
-            TimePickerDialog(
-                requireContext(),
-                R.style.CustomDatePickerStyle,
-                { _, hourOfDay, minute ->
-                    // Establece la hora seleccionada en el calendario
-                    calendarBox.set(Calendar.HOUR_OF_DAY, hourOfDay)
-                    calendarBox.set(Calendar.MINUTE, minute)
+            val selectedDate = Calendar.getInstance()
+            selectedDate.set(year, month, day)
 
-                    // Llama a la función para guardar la cita con fecha y hora
-                    guardarCita(year, month, day, hourOfDay, minute)
-                },
-                calendarBox.get(Calendar.HOUR_OF_DAY),
-                calendarBox.get(Calendar.MINUTE),
-                true
-            ).apply {
-                setOnShowListener {
-                    getButton(TimePickerDialog.BUTTON_NEGATIVE)?.setTextColor(Color.BLACK)
-                    getButton(TimePickerDialog.BUTTON_POSITIVE)?.setTextColor(Color.BLACK)
-                }
-        }.show()
+            if (selectedDate.before(Calendar.getInstance())) {
+                Toast.makeText(requireContext(), "No se pueden coger citas en fechas ya pasadas", Toast.LENGTH_SHORT).show()
+            } else {
+                TimePickerDialog(
+                    requireContext(),
+                    R.style.CustomDatePickerStyle,
+                    { _, hourOfDay, minute ->
+                        // Establece la hora seleccionada en el calendario
+                        calendarBox.set(Calendar.HOUR_OF_DAY, hourOfDay)
+                        calendarBox.set(Calendar.MINUTE, minute)
+
+                        // Llama a la función para guardar la cita con fecha y hora
+                        guardarCita(year, month, day, hourOfDay, minute)
+                    },
+                    calendarBox.get(Calendar.HOUR_OF_DAY),
+                    calendarBox.get(Calendar.MINUTE),
+                    true
+                ).apply {
+                    setOnShowListener {
+                        getButton(TimePickerDialog.BUTTON_NEGATIVE)?.setTextColor(Color.BLACK)
+                        getButton(TimePickerDialog.BUTTON_POSITIVE)?.setTextColor(Color.BLACK)
+                    }
+                }.show()
             }
+        }
 
 
 
@@ -95,6 +102,10 @@ class DetallesPacFragmentMed : Fragment() {
                 calendarBox.get(Calendar.YEAR),
                 calendarBox.get(Calendar.MONTH),
                 calendarBox.get(Calendar.DAY_OF_MONTH))
+
+            // Establecer la fecha mínima permitida a la fecha actual
+            datePickerDialog.datePicker.minDate = System.currentTimeMillis() - 1000
+
 
             datePickerDialog.setOnShowListener {
                 datePickerDialog.getButton(DatePickerDialog.BUTTON_NEGATIVE)?.setTextColor(Color.BLACK)

@@ -66,11 +66,11 @@
             android:padding="8dp">
 
             <ImageView
-                android:id="@+id/HPimgInfo"
+                android:id="@+id/HA_asig"
                 android:layout_width="115dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_info"
+                android:src="@drawable/ic_med_pac"
                 app:tint="@color/black" />
 
             <TextView
