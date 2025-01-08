@@ -34,8 +34,8 @@ class DoTestFragmentPac : Fragment() {
     private lateinit var recyclerViewQuestions: RecyclerView
     private lateinit var botonFin: AppCompatButton
     private lateinit var test: Test
-    private lateinit var preguntaOpciones: List<PreguntaOpciones>
 
+    private var preguntasLista = mutableListOf<PreguntaOpciones>()
     private var respuestas = mutableMapOf<String, String>()
 
 
@@ -71,15 +71,19 @@ class DoTestFragmentPac : Fragment() {
                 && preguntas != null && valores != null) {
                 test = Test(id, descripcion, explicacion, opciones, preguntas, valores)
 
-                preguntaOpciones = preguntas.mapIndexed { index, pregunta ->
+                for (pregunta in preguntas) {
+                    preguntasLista.add(PreguntaOpciones(pregunta,opciones, valores))
+                }
+
+                /*preguntaOpciones = preguntas.mapIndexed { index, pregunta ->
                     PreguntaOpciones(
                         pregunta,
                         opciones[index].split(","),
                         valores[index].split(","))
-                }
+            }*/
 
                 recyclerViewQuestions.layoutManager = LinearLayoutManager(requireContext())
-                recyclerViewQuestions.adapter = AdaptadorPreguntas(preguntaOpciones)
+                recyclerViewQuestions.adapter = AdaptadorPreguntas(preguntasLista)
 
 
 
@@ -118,20 +122,18 @@ class DoTestFragmentPac : Fragment() {
             holder.tituloPregunta.text = preguntaOpcn.pregunta
             holder.listaOpciones.removeAllViews()
 
-            for ((index,opcion) in preguntaOpcn.opciones.withIndex()) {
-                val radioButton = RadioButton(holder.itemView.context).apply {
-                    text = opcion
-                    id = index
-                }
-
+            for (opcion in preguntaOpcn.opciones) {
+                val radioButton = RadioButton(holder.itemView.context)
+                radioButton.text = opcion
                 holder.listaOpciones.addView(radioButton)
+            }
 
-                // Escuchar los cambios de selección
-                holder.listaOpciones.setOnCheckedChangeListener { _, checkedId ->
-                    val selectedOption = preguntaOpcn.opciones[checkedId]
+            holder.listaOpciones.setOnCheckedChangeListener { _, checkedId ->
+                    val selectedOption = holder.itemView.findViewById<RadioButton>(checkedId)?.text.toString()
                     respuestas[preguntaOpcn.pregunta] = selectedOption
                 }
-            }
+
+
         }
 
 
@@ -147,7 +149,7 @@ class DoTestFragmentPac : Fragment() {
         // Obtener los valores de las respuestas seleccionadas
         var totalScore = 0
         for ((pregunta, opcionSeleccionada) in respuestas) {
-            val preguntaOpc = preguntaOpciones.find { it.pregunta == pregunta }
+            val preguntaOpc = preguntasLista.find { it.pregunta == pregunta }
             if (preguntaOpc != null) {
                 val indice = preguntaOpc.opciones.indexOf(opcionSeleccionada)
                 if (indice != -1) {
