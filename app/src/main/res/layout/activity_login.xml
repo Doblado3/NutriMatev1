@@ -43,8 +43,8 @@
             android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:padding="16dp"
-            android:textColorHint="@color/prueba2"
-            android:textStyle="bold" />
+            android:textColorHint="@color/grey"
+            android:textStyle="italic" />
 
         <EditText
             android:id="@+id/editTextPassword"
@@ -60,8 +60,8 @@
             android:hint="@string/passwd"
             android:inputType="textPassword"
             android:padding="16dp"
-            android:textColorHint="@color/prueba2"
-            android:textStyle="bold" />
+            android:textColorHint="@color/grey"
+            android:textStyle="italic" />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/AUbtnLogin"
