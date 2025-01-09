@@ -9,176 +9,159 @@
     android:background="@color/white"
     tools:context=".RegisterActivity">
 
-    <EditText
-        android:id="@+id/ReditTextName"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="50dp"
-        android:background="@drawable/editlogintext_background"
-        android:hint="@string/textoNombre"
-        android:padding="8dp"
-        android:textColorHint="@color/prueba2"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/ReditTextEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="50dp"
-        android:background="@drawable/editlogintext_background"
-        android:hint="Correo Electrónico"
-        android:padding="8dp"
-        android:textColorHint="@color/prueba2"
-        android:textStyle="italic"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ReditTextName" />
-
-    <EditText
-        android:id="@+id/ReditTextPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="50dp"
-        android:background="@drawable/editlogintext_background"
-        android:hint="Contraseña"
-        android:inputType="textPassword"
-        android:padding="8dp"
-        android:textColorHint="@color/prueba2"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ReditTextEmail" />
-
-    <EditText
-        android:id="@+id/ReditTextApellidos"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="50dp"
-        android:background="@drawable/editlogintext_background"
-        android:hint="@string/textoApellidos"
-        android:padding="8dp"
-        android:textColorHint="@color/prueba2"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ReditTextPassword" />
-
-    <EditText
-        android:id="@+id/ReditTextDate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="50dp"
-        android:background="@drawable/editlogintext_background"
-        android:hint="@string/textoFechaNacMed"
-        android:inputType="date"
-        android:padding="8dp"
-        android:textColorHint="@color/prueba2"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ReditTextApellidos" />
-
-    <EditText
-        android:id="@+id/ReditTextPhone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="50dp"
-        android:background="@drawable/editlogintext_background"
-        android:hint="@string/textoNumeroMovil"
-        android:inputType="phone"
-        android:padding="8dp"
-        android:textColorHint="@color/prueba2"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ReditTextDate" />
-
-    <TextView
-        android:id="@+id/textRegisterSex"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="266dp"
-        android:background="@drawable/editlogintext_background"
-        android:padding="16dp"
-        android:text="Sexo:"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ReditTextPhone" />
-
-    <RadioGroup
-        android:id="@+id/RradioGroupSexo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textRegisterSex">
-
-        <RadioButton
-            android:id="@+id/RradioMasculino"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/editlogintext_background"
-            android:padding="8dp"
-            android:text="Masculino" />
+            android:orientation="vertical" >
 
-        <RadioButton
-            android:id="@+id/RradioFemenino"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:background="@drawable/editlogintext_background"
-            android:padding="8dp"
-            android:text="Femenino" />
+            <EditText
+                android:id="@+id/ReditTextName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="80dp"
+                android:layout_marginEnd="50dp"
+                android:background="@drawable/editlogintext_background"
+                android:hint="@string/textoNombre"
+                android:padding="8dp"
+                android:textColorHint="@color/prueba2"
+                android:textStyle="bold" />
 
-        <RadioButton
-            android:id="@+id/RradioN_C"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="6dp"
-            android:background="@drawable/editlogintext_background"
-            android:padding="8dp"
-            android:text="N/C" />
+            <EditText
+                android:id="@+id/ReditTextEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="50dp"
+                android:background="@drawable/editlogintext_background"
+                android:hint="Correo Electrónico"
+                android:padding="8dp"
+                android:textColorHint="@color/prueba2"
+                android:textStyle="italic" />
 
-    </RadioGroup>
+            <EditText
+                android:id="@+id/ReditTextPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="50dp"
+                android:background="@drawable/editlogintext_background"
+                android:hint="Contraseña"
+                android:inputType="textPassword"
+                android:padding="8dp"
+                android:textColorHint="@color/prueba2"
+                android:textStyle="bold" />
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnRegister"
-        style="@android:style/Widget.Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="80dp"
-        android:layout_marginBottom="80dp"
-        android:background="@drawable/primary_background"
-        android:textColor="@color/white"
-        android:padding="16dp"
-        android:text="Registrarse"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/RradioGroupSexo" />
+            <EditText
+                android:id="@+id/ReditTextApellidos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="50dp"
+                android:background="@drawable/editlogintext_background"
+                android:hint="@string/textoApellidos"
+                android:padding="8dp"
+                android:textColorHint="@color/prueba2"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/ReditTextDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="50dp"
+                android:background="@drawable/editlogintext_background"
+                android:hint="@string/textoFechaNacMed"
+                android:inputType="date"
+                android:padding="8dp"
+                android:textColorHint="@color/prueba2"
+                android:textStyle="bold" />
+
+            <EditText
+                android:id="@+id/ReditTextPhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="50dp"
+                android:background="@drawable/editlogintext_background"
+                android:hint="@string/textoNumeroMovil"
+                android:inputType="phone"
+                android:padding="8dp"
+                android:textColorHint="@color/prueba2"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textRegisterSex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="80dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="266dp"
+                android:background="@drawable/editlogintext_background"
+                android:padding="16dp"
+                android:text="Sexo:"
+                android:textStyle="bold" />
+
+            <RadioGroup
+                android:id="@+id/RradioGroupSexo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="50dp">
+
+                <RadioButton
+                    android:id="@+id/RradioMasculino"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/editlogintext_background"
+                    android:padding="8dp"
+                    android:text="Masculino" />
+
+                <RadioButton
+                    android:id="@+id/RradioFemenino"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/editlogintext_background"
+                    android:padding="8dp"
+                    android:text="Femenino" />
+
+                <RadioButton
+                    android:id="@+id/RradioN_C"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="6dp"
+                    android:background="@drawable/editlogintext_background"
+                    android:padding="8dp"
+                    android:text="N/C" />
+
+            </RadioGroup>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnRegister"
+                style="@android:style/Widget.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="80dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="80dp"
+                android:layout_marginBottom="80dp"
+                android:background="@drawable/primary_background"
+                android:padding="16dp"
+                android:text="Registrarse"
+                android:textColor="@color/white" />
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

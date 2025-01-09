@@ -13,16 +13,19 @@
 
 
     <GridLayout
+        android:id="@+id/gridLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:columnCount="2"
         android:padding="8dp"
         android:rowCount="3"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.729">
 
         <LinearLayout
             android:id="@+id/LLAddTest"
@@ -30,9 +33,9 @@
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_margin="8dp"
+            android:background="@drawable/button_background"
             android:gravity="center"
             android:orientation="vertical"
-            android:background="@drawable/button_background"
             android:padding="8dp">
 
             <ImageView
@@ -60,9 +63,9 @@
             android:layout_height="wrap_content"
             android:layout_columnWeight="1"
             android:layout_margin="8dp"
+            android:background="@drawable/button_background"
             android:gravity="center"
             android:orientation="vertical"
-            android:background="@drawable/button_background"
             android:padding="8dp">
 
             <ImageView
@@ -84,11 +87,20 @@
         </LinearLayout>
 
 
-
-
     </GridLayout>
 
-
+    <ImageView
+        android:id="@+id/imageView6"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:src="@drawable/icono_sin_fondo"
+        app:layout_constraintBottom_toTopOf="@+id/gridLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
