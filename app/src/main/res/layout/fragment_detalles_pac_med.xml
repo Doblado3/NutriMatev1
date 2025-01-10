@@ -51,23 +51,23 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="328dp"
+        android:layout_marginTop="64dp"
         android:layout_marginBottom="8dp"
         android:text="Tus próximas citas:"
         android:textColor="@color/prueba"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/citasMedRec"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/resultadosPacMed" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/citasMedRec"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="32dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/botonBorrarPac"/>
+        app:layout_constraintTop_toBottomOf="@+id/textViewDescCitasMed"/>
 
     <LinearLayout
         android:id="@+id/linearLayout2"

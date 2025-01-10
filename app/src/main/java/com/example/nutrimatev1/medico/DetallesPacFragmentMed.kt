@@ -293,36 +293,43 @@ class DetallesPacFragmentMed : Fragment() {
         }
 
     private fun borrarCita(citaId: String) {
-        Firebase.firestore.collection("Medicos")
-            .document(Firebase.auth.currentUser!!.email.toString())
-            .collection("pacientes")
-            .document(paciente.id)
-            .collection("citas")
-            .document(citaId)
-            .delete()
-            .addOnSuccessListener {
-                Toast.makeText(requireContext(), "Cita eliminada correctamente", Toast.LENGTH_SHORT).show()
-                muestraCitas()
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(requireContext(), "Error al eliminar la cita: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
+        val builder = AlertDialog.Builder(requireContext(), R.style.CustomAlertDialogTheme)
+        builder.setTitle("Vas a eliminar esta cita")
+            .setMessage("¿Estas seguro?")
+            .setPositiveButton("Sí") { _, _ ->
 
-        Firebase.firestore.collection("Pacientes")
-            .document(paciente.id)
-            .collection("citas")
-            .document(citaId)
-            .delete()
-            .addOnSuccessListener {
-                muestraCitas()
+                Firebase.firestore.collection("Medicos")
+                    .document(Firebase.auth.currentUser!!.email.toString())
+                    .collection("pacientes")
+                    .document(paciente.id)
+                    .collection("citas")
+                    .document(citaId)
+                    .delete()
+                    .addOnSuccessListener {
+                        Toast.makeText(requireContext(), "Cita eliminada correctamente", Toast.LENGTH_SHORT).show()
+                        muestraCitas()
+                    }
+                    .addOnFailureListener { e ->
+                        Toast.makeText(requireContext(), "Error al eliminar la cita: ${e.message}", Toast.LENGTH_SHORT).show()
+                    }
+
+                Firebase.firestore.collection("Pacientes")
+                    .document(paciente.id)
+                    .collection("citas")
+                    .document(citaId)
+                    .delete()
+                    .addOnSuccessListener {
+                        muestraCitas()
+                    }
+                    .addOnFailureListener{
+                        Alert.showAlert(requireContext(), "Error al borrar la cita")
+                    }
+            }.setNegativeButton("Cancelar", null)
+            .show()
+
+
+
             }
-            .addOnFailureListener{
-                Alert.showAlert(requireContext(), "Error al borrar la cita")
-            }
-
-
-
-    }
 
     inner class AdaptadorCitas(private val dataSet: List<Cita>, private val clickListener: (String)->Unit):
         RecyclerView.Adapter<AdaptadorCitas.ViewHolder>(){

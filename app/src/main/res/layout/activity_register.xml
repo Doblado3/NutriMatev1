@@ -28,8 +28,8 @@
                 android:background="@drawable/editlogintext_background"
                 android:hint="@string/textoNombre"
                 android:padding="8dp"
-                android:textColorHint="@color/prueba2"
-                android:textStyle="bold" />
+                android:textColorHint="@color/grey"
+                android:textStyle="italic" />
 
             <EditText
                 android:id="@+id/ReditTextEmail"
@@ -41,7 +41,7 @@
                 android:background="@drawable/editlogintext_background"
                 android:hint="Correo Electrónico"
                 android:padding="8dp"
-                android:textColorHint="@color/prueba2"
+                android:textColorHint="@color/grey"
                 android:textStyle="italic" />
 
             <EditText
@@ -55,8 +55,8 @@
                 android:hint="Contraseña"
                 android:inputType="textPassword"
                 android:padding="8dp"
-                android:textColorHint="@color/prueba2"
-                android:textStyle="bold" />
+                android:textColorHint="@color/grey"
+                android:textStyle="italic" />
 
             <EditText
                 android:id="@+id/ReditTextApellidos"
@@ -68,8 +68,8 @@
                 android:background="@drawable/editlogintext_background"
                 android:hint="@string/textoApellidos"
                 android:padding="8dp"
-                android:textColorHint="@color/prueba2"
-                android:textStyle="bold" />
+                android:textColorHint="@color/grey"
+                android:textStyle="italic" />
 
             <EditText
                 android:id="@+id/ReditTextDate"
@@ -82,8 +82,8 @@
                 android:hint="@string/textoFechaNacMed"
                 android:inputType="date"
                 android:padding="8dp"
-                android:textColorHint="@color/prueba2"
-                android:textStyle="bold" />
+                android:textColorHint="@color/grey"
+                android:textStyle="italic" />
 
             <EditText
                 android:id="@+id/ReditTextPhone"
@@ -96,12 +96,12 @@
                 android:hint="@string/textoNumeroMovil"
                 android:inputType="phone"
                 android:padding="8dp"
-                android:textColorHint="@color/prueba2"
-                android:textStyle="bold" />
+                android:textColorHint="@color/grey"
+                android:textStyle="italic" />
 
             <TextView
                 android:id="@+id/textRegisterSex"
-                android:layout_width="wrap_content"
+                android:layout_width="81dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="80dp"
                 android:layout_marginTop="16dp"
@@ -115,7 +115,7 @@
                 android:id="@+id/RradioGroupSexo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
+                android:layout_marginStart="150dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="50dp">
 
@@ -154,9 +154,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="80dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="32dp"
                 android:layout_marginEnd="80dp"
-                android:layout_marginBottom="80dp"
+                android:layout_marginBottom="32dp"
                 android:background="@drawable/primary_background"
                 android:padding="16dp"
                 android:text="Registrarse"
