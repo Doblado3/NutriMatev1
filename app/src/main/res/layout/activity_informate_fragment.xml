@@ -14,10 +14,11 @@
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:background="@color/primary"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView2"
@@ -26,7 +27,7 @@
         android:elevation="24dp"
         android:text="SECCIÓN DE INFORMACIÓN"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/prueba"
+        android:textColor="@color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/view"
