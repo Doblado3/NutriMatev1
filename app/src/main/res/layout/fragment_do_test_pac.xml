@@ -13,15 +13,19 @@
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="32dp"
-        android:paddingBottom="16dp" />
+        android:layout_marginTop="16dp"
+        android:paddingBottom="8dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewQuestions"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@+id/btnFinTest"
+        android:layout_marginBottom="16dp"
         app:layout_constraintTop_toBottomOf="@+id/tvTestTitle"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="8dp"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnFinTest"
@@ -30,7 +34,7 @@
         android:text="Enviar Test"
         android:background="@drawable/primary_background"
         android:textColor="@android:color/white"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="2dp"
         app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
