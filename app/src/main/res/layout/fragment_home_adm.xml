@@ -43,8 +43,7 @@
                 android:layout_width="115dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_test"
-                app:tint="@color/black" />
+                android:src="@drawable/tests"/>
 
             <TextView
                 android:id="@+id/HAtxtTests"
@@ -73,8 +72,7 @@
                 android:layout_width="115dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center"
-                android:src="@drawable/ic_med_pac"
-                app:tint="@color/black" />
+                android:src="@drawable/medico"/>
 
             <TextView
                 android:id="@+id/HAtxtAsigMed"

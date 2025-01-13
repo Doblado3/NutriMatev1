@@ -53,8 +53,7 @@
                         android:layout_width="115dp"
                         android:layout_height="80dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_test"
-                        app:tint="@color/black" />
+                        android:src="@drawable/tests"/>
 
                     <TextView
                         android:id="@+id/HPtxtTests"
@@ -83,8 +82,7 @@
                         android:layout_width="115dp"
                         android:layout_height="80dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_info"
-                        app:tint="@color/black" />
+                        android:src="@drawable/informacion"/>
 
                     <TextView
                         android:id="@+id/HPtxtInfo"
@@ -112,8 +110,7 @@
                         android:layout_width="115dp"
                         android:layout_height="80dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_historial"
-                        app:tint="@color/black" />
+                        android:src="@drawable/cita"/>
 
                     <TextView
                         android:id="@+id/HPtxtHistorial"
@@ -141,8 +138,7 @@
                         android:layout_width="115dp"
                         android:layout_height="80dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_diviertete"
-                        app:tint="@color/black" />
+                        android:src="@drawable/juego" />
 
                     <TextView
                         android:id="@+id/HPtxtCitas"
