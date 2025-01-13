@@ -20,7 +20,7 @@
         android:layout_marginTop="32dp"
         app:layout_constraintBottom_toTopOf="@+id/resultadosPacMed"
         android:layout_marginBottom="8dp"
-        android:text="Actividad reciente de tus pacientes:" />
+        android:text="Actividad reciente de tus paciente:" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/resultadosPacMed"

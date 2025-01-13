@@ -14,7 +14,7 @@
         android:id="@+id/view"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@color/primary"
+        android:background="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,7 +25,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="24dp"
-        android:text="SECCIÓN DE INFORMACIÓN"
+        android:text="INFORMACIÓN SEMANAL"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:textColor="@color/black"
         android:textSize="20sp"
@@ -82,6 +82,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="5dp"
+                            android:textColor="@color/prueba"
                             android:text="Consejos de Salud"
                             android:textSize="20dp"
                             android:textStyle="bold">
@@ -138,6 +139,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="5dp"
+                            android:textColor="@color/prueba"
                             android:text="Los mejores Autotests"
                             android:textSize="20dp"
                             android:textStyle="bold">
@@ -194,6 +196,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="5dp"
+                            android:textColor="@color/prueba"
                             android:text="¿Qué es el TCA?"
                             android:textSize="20dp"
                             android:textStyle="bold">
@@ -250,6 +253,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="5dp"
+                            android:textColor="@color/prueba"
                             android:text="¿Qué es Nutrimate?"
                             android:textSize="20dp"
                             android:textStyle="bold">
@@ -306,6 +310,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginTop="5dp"
+                            android:textColor="@color/prueba"
                             android:text="Cómo ponerte en contacto con tu médico"
                             android:textSize="20dp"
                             android:textStyle="bold">
@@ -372,6 +377,7 @@
                                 android:layout_marginLeft="10dp"
                                 android:layout_marginTop="5dp"
                                 android:text="Tipos de dietas"
+                                android:textColor="@color/prueba"
                                 android:textSize="20dp"
                                 android:textStyle="bold">
 
@@ -474,6 +480,7 @@
                             android:layout_marginTop="5dp"
                             android:text="Cómo actuar frente al TCA ajeno"
                             android:textSize="20dp"
+                            android:textColor="@color/prueba"
                             android:textStyle="bold">
 
                         </TextView>
