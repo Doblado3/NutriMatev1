@@ -14,18 +14,21 @@
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="16dp"
-        android:paddingBottom="8dp" />
+        android:paddingBottom="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewQuestions"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/tvTestTitle"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/btnFinTest"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintTop_toBottomOf="@+id/tvTestTitle"
-        android:layout_marginTop="8dp"/>
+        app:layout_constraintBottom_toTopOf="@id/btnFinTest"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnFinTest"
