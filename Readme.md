@@ -40,6 +40,7 @@ Proporcionar una herramienta digital que combine evaluación, educación, soport
 |-----------|-----------|
 | Android Studio | Entorno de desarrollo principal |
 | Kotlin | Lenguaje de programación |
+| Java | Lenguaje de programación | Sección Videojuego |
 | Firebase | Servicios de autenticación y base de datos en tiempo real |
 | Jetpack Compose | Desarrollo de interfaz de usuario |
 | Room Database | Almacenamiento local de datos |
@@ -55,7 +56,7 @@ Proporcionar una herramienta digital que combine evaluación, educación, soport
 ### Pasos de Instalación
 1. Clonar el repositorio:
    ```bash
-   git clone https://github.com/Doblado3/NutriMate.git
+   git clone https://github.com/Doblado3/NutriMatev1.git
    ```
 2. Abrir el proyecto en Android Studio
 3. Configurar Firebase añadiendo el archivo `google-services.json`
